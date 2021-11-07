@@ -1,0 +1,3 @@
+[submodule "report"]
+	path = report
+	url = https://github.com/wojciechdk/deep-learning-2021-final-project-report
