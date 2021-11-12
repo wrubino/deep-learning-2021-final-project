@@ -1,0 +1,26 @@
+HASPI_v2.m ***
+NNfeedforward.m ***
+NNfeedfwdEns.m ***
+eb_BMaddnoise.m ***
+eb_BWadjust.m ***
+eb_CenterFreq.m ***
+eb_EarModel.m ***
+eb_EnvAlign.m ***
+eb_EnvCompressBM.m
+eb_EnvSL2.m
+eb_GammatoneBM2.m
+eb_GammatoneEnv2.m
+eb_GroupDelayComp.m
+eb_IHCadapt.m
+eb_InputAlign.m
+eb_LossParameters.m
+eb_MiddleEar.m
+eb_NALR.m
+eb_Resamp24kHz.m
+eb_aveSL.m
+ebm_AddNoise.m
+ebm_CepCoef.m
+ebm_EnvFilt.m
+ebm_GetNeuralNet.m
+ebm_ModCorr.m
+ebm_ModFilt.m
