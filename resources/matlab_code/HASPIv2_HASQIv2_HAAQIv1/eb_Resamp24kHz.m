@@ -35,7 +35,7 @@ elseif fx < fy
 else
 %   Resample for the input rate higher than the output
 %   Resampling includes an anti-aliasing filter.
-    y=resample(x,fy,fx);
+    y=resamp    le(x,fy,fx);
     
 %   Reduce the input signal bandwidth to 21 kHz:
 %   Chebychev Type 2 LP (smooth passband)

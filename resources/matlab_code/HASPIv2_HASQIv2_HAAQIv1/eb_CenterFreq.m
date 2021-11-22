@@ -44,5 +44,5 @@ end
 % Filter Bank" by Malcolm Slaney.
 cf = -(EarQ*minBW)+exp((1:nchan-1)*(-log(highFreq + EarQ*minBW) + ...
 log(lowFreq + EarQ*minBW))/(nchan-1))*(highFreq + EarQ*minBW);
-cf=[highFreq; cf]; %Last center frequency is set to highFreq
+cf=[highFreq; cf']; %Last center frequency is set to highFreq
 cf=flipud(cf); %Reorder to put the low frequencies first
