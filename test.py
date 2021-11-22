@@ -53,7 +53,7 @@ haspi, _ = HASPI_v2.HASPI_v2(
     fs,
     recording_clean,
     fs,
-    HL=np.zeros(6)
+    HL=np.ones(6)
 )
 
 print(f'HASPI: {haspi}')
