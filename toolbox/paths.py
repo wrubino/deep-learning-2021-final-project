@@ -60,6 +60,6 @@ class ProjectPaths:
                 self.root = paths.resources / 'cache'
 
                 # Sentence data (pandas dataframe)
-                self.sentence_data = self.root / 'sentence_data.pkl'
+                self.df_timit = self.root / 'df_timit.pkl'
 
         self.cache = Cache(self)
