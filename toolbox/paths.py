@@ -38,10 +38,10 @@ class ProjectPaths:
                 self.timit = TIMIT(self)
 
                 # Recordings
-                class Recordings:
+                class SyntheticSpeech:
                     def __init__(self, data):
                         # Root folder for the data.
-                        self.root = data.root / 'recordings'
+                        self.root = data.root / 'synthetic_speech'
 
                         # Folder for the full length versions.
                         self.full_length = self.root / 'full_length'
@@ -49,7 +49,7 @@ class ProjectPaths:
                         # Folder for the full length versions.
                         self.cut_5_s = self.root / 'cut_5_s'
 
-                self.recordings = Recordings(self)
+                self.synthetic_speech = SyntheticSpeech(self)
 
         self.data = Data(self)
 
@@ -59,7 +59,10 @@ class ProjectPaths:
                 # Root folder for the cache.
                 self.root = paths.resources / 'cache'
 
-                # Sentence data (pandas dataframe)
+                # TIMIT meta data (pandas dataframe)
                 self.df_timit = self.root / 'df_timit.pkl'
+
+                # Synthetic speech data (pandas dataframe)
+                self.df_synthetic_speech = self.root / 'df_synthetic_speech.pkl'
 
         self.cache = Cache(self)
