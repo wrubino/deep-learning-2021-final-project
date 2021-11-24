@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import soundfile as sf
 
 from pathlib import Path
 from toolbox.paths import ProjectPaths
@@ -308,7 +309,7 @@ def load_synthetic_speech_data(
         'speaker',
         'length',
         'variant',
-        'segment_number',
+        'segment',
         'fullness',
         'clarity',
         'audio_path',
@@ -413,7 +414,7 @@ def load_synthetic_speech_data(
                 dict(speaker=speaker,
                      length='full',
                      variant=variant,
-                     segment_number=np.nan,
+                     segment=np.nan,
                      fullness=fullness,
                      clarity=clarity,
                      audio_path=audio_path_full_length),
@@ -437,7 +438,7 @@ def load_synthetic_speech_data(
                     dict(speaker=speaker,
                          length='5s',
                          variant=variant,
-                         segment_number=idx_segment,
+                         segment=int(audio_path_segment.stem),
                          fullness=fullness,
                          clarity=clarity,
                          audio_path=audio_path_segment),
@@ -449,3 +450,35 @@ def load_synthetic_speech_data(
         project_paths.cache.df_synthetic_speech)
 
     return df_synthetic_speech
+
+
+def get_waveforms_synthetic_speech(parameters,
+                                   paths: ProjectPaths = ProjectPaths()):
+    # %% Load the dataframe
+    df_synthetic_speech = pd.read_pickle(paths.cache.df_synthetic_speech)
+
+    # Set up a filter.
+    mask = np.ones(len(df_synthetic_speech), dtype=bool)
+    for parameter_name, parameter_value in parameters.items():
+        mask = mask & (df_synthetic_speech[parameter_name] == parameter_value)
+
+    # Get a dataframe containing data from segment.
+    df_segment = (
+        df_synthetic_speech
+            .loc[mask, :]
+    )
+
+    # Load the audio data.
+    audio = dict()
+    for idx_row, row in df_segment.iterrows():
+        variant = row['variant']
+        fullness = row['fullness']
+        clarity = row['clarity']
+        path = paths.data.synthetic_speech.root / row['audio_path']
+
+        if variant == 'zoom_augmented':
+            variant = f'{variant}_f{fullness}_c{clarity}'
+
+        audio[variant], fs = sf.read(path)
+
+    return audio, fs

@@ -8,6 +8,10 @@ def play_timit(row_timit_data: pd.Series,
                project_paths: ProjectPaths = ProjectPaths(),
                blocking=False):
 
+    # In case a dataframe is passed, process only the first row.
+    if isinstance(row_timit_data, pd.DataFrame):
+        row_synthetic_speech_data = row_timit_data.iloc[0, :]
+
     # Get the path to the audio file:
     path_recording = project_paths.data.timit.root / row_timit_data[
         'audio_path']
@@ -25,6 +29,10 @@ def play_timit(row_timit_data: pd.Series,
 def play_synthetic_speech(row_synthetic_speech_data: pd.Series,
                           project_paths: ProjectPaths = ProjectPaths(),
                           blocking=False):
+
+    # In case a dataframe is passed, process only the first row.
+    if isinstance(row_synthetic_speech_data, pd.DataFrame):
+        row_synthetic_speech_data = row_synthetic_speech_data.iloc[0, :]
 
     # Get the path to the audio file:
     path_audio = (
