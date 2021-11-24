@@ -2,7 +2,8 @@ from toolbox.initialization import *
 from toolbox.dsp import db2mag, mag2db, rms
 
 # %%
-df_timit = pd.read_pickle(paths.cache.sent)
+df_timit = pd.read_pickle(paths.cache.df_timit)
+df_synthetic_speech = pd.read_pickle(paths.cache.df_synthetic_speech)
 
 
 # %%

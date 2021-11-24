@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
-import toolbox.paths
 
 from pathlib import Path
+from toolbox.paths import ProjectPaths
 
 
 def get_sentence_data(sentence_code: str,
@@ -156,16 +156,14 @@ def timit_dialect(dialect_code: str):
     return dialect
 
 
-def load_timit_data(project_paths: toolbox.paths.ProjectPaths = None):
+def load_timit_data(
+        project_paths: ProjectPaths = ProjectPaths()):
     """
     The function returns a dataframe containing the metadata about the TIMIT
     dataset.
     :return: 
     :rtype: 
     """
-
-    if project_paths is None:
-        project_paths = toolbox.paths.ProjectPaths()
 
     # Define the names of the columns to include in the TIMIT dataframe
     column_names = [
@@ -241,7 +239,6 @@ def load_timit_data(project_paths: toolbox.paths.ProjectPaths = None):
 
                 # Get the information for each sentence.
                 for sentence_code in sentence_codes:
-
                     # Extract and interpret the sentence types.
                     sentence_type_code = sentence_code[:2]
 
@@ -266,7 +263,7 @@ def load_timit_data(project_paths: toolbox.paths.ProjectPaths = None):
                         'text': sentence['text'],
                         'audio_path': (
                             sentence['audio_path']
-                            .relative_to(
+                                .relative_to(
                                 project_paths.data.timit.root)
                         ),
                         'start_sample': sentence['start_sample'],
@@ -296,7 +293,7 @@ def load_timit_data(project_paths: toolbox.paths.ProjectPaths = None):
 
 
 def load_synthetic_speech_data(
-        project_paths: toolbox.paths.ProjectPaths = None):
+        project_paths: ProjectPaths = ProjectPaths()):
     """
     The function returns a dataframe containing the metadata about the
     synthetic speech dataset.
@@ -305,10 +302,6 @@ def load_synthetic_speech_data(
     :return:
     :rtype:
     """
-
-    # Default project paths.
-    if project_paths is None:
-        project_paths = toolbox.paths.ProjectPaths()
 
     # Define the names of the columns to include in the recordings dataframe
     column_names = [
