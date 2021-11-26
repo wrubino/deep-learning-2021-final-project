@@ -1,4 +1,5 @@
 import toolbox.configuration
+import toolbox.dhasp
 import toolbox.data_loading
 import toolbox.data_science
 import toolbox.dataframe
@@ -9,3 +10,4 @@ import toolbox.initialization
 import toolbox.paths
 import toolbox.plotting
 import toolbox.sound
+import toolbox.type_conversion

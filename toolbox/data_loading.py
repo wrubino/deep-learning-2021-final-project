@@ -1,9 +1,13 @@
 import numpy as np
 import pandas as pd
 import soundfile as sf
+import torch
+import torchaudio as ta
+import torchaudio.functional as taf
 
 from pathlib import Path
 from toolbox.paths import ProjectPaths
+from toolbox.type_conversion import np2torch
 
 
 def get_sentence_data(sentence_code: str,
@@ -453,8 +457,9 @@ def load_synthetic_speech_data(
 
 
 def get_waveforms_synthetic_speech(parameters,
+                                   fs_output=None,
                                    paths: ProjectPaths = ProjectPaths()):
-    # %% Load the dataframe
+    # Load the dataframe
     df_synthetic_speech = pd.read_pickle(paths.cache.df_synthetic_speech)
 
     # Set up a filter.
@@ -479,6 +484,29 @@ def get_waveforms_synthetic_speech(parameters,
         if variant == 'zoom_augmented':
             variant = f'{variant}_f{fullness}_c{clarity}'
 
-        audio[variant], fs = sf.read(path)
+        if path.suffix == '.mp3':
+            # Read the file using soundfile.
+            waveform, fs = sf.read(path)
 
-    return audio, fs
+            # Transform the waveform int
+            waveform = (
+                np2torch(waveform)
+                    .to(torch.float32)
+                    .unsqueeze(0)
+            )
+        elif path.suffix == '.wav':
+            waveform, fs = ta.load(path)
+        else:
+            raise ValueError(f'Invalid file type: "{path.suffx}".')
+
+        # Resample to the output fs.
+        if fs_output is None:
+            fs_output = fs
+
+        if fs_output != fs:
+            resample = ta.transforms.Resample(fs, fs_output)
+            waveform = resample(waveform)
+
+        audio[variant] = waveform
+
+    return audio, fs_output

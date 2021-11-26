@@ -1,29 +1,65 @@
 import numpy as np
+import torch
+import torchaudio as ta
+import torchaudio.functional as taf
+
 from resampy import resample
+from scipy.signal import hilbert
 from typing import Union
+from toolbox.type_conversion import ensure_torch
 
 
-def rms(signal: np.ndarray):
-    return np.sqrt(np.mean(np.power(signal, 2)))
+def rms(signal: Union[np.ndarray, torch.Tensor]):
+    if isinstance(signal, torch.Tensor):
+        return torch.sqrt(torch.mean(torch.float_power(signal, 2)))
+    else:
+        return np.sqrt(np.mean(np.power(signal, 2)))
 
 
-def db2mag(magnitude_db: np.ndarray):
-    return np.power(10, magnitude_db / 20)
+def db2mag(magnitude_db: Union[np.ndarray,
+                               torch.Tensor,
+                               float,
+                               int]):
+    if isinstance(magnitude_db, torch.Tensor):
+        return torch.float_power(10, magnitude_db / 20)
+    else:
+        return np.power(10, magnitude_db / 20)
 
 
-def mag2db(magnitude: np.ndarray):
-    return 20 * np.log10(magnitude)
+def mag2db(magnitude: Union[np.ndarray,
+                            torch.Tensor,
+                            float,
+                            int]):
+    if isinstance(magnitude, torch.Tensor):
+        return 20 * torch.log10(magnitude)
+    else:
+        return 20 * np.log10(magnitude)
 
 
-def mel2hz(mel):
-    return 700 * (np.power(10, mel / 2595) - 1)
+def mel2hz(mel: Union[np.ndarray,
+                      torch.Tensor,
+                      float,
+                      int]):
+    if isinstance(mel, torch.Tensor):
+        return 700 * (torch.float_power(10, mel / 2595) - 1)
+    else:
+        return 700 * (np.power(10, mel / 2595) - 1)
 
 
-def hz2mel(hz):
-    return (2595 * np.log10(1 + hz / 700))
+def hz2mel(hz: Union[np.ndarray,
+                     torch.Tensor,
+                     float,
+                     int]):
+    if isinstance(hz, torch.Tensor):
+        return 2595 * torch.log10(1 + hz / 700)
+    else:
+        return 2595 * np.log10(1 + hz / 700)
 
 
-def erb(frequency):
+def erb(frequency: Union[np.ndarray,
+                         torch.Tensor,
+                         float,
+                         int]):
     """
     Equivalent rectangular bandwidth of an auditory filter at a given frequency
     :param frequency:
@@ -31,33 +67,91 @@ def erb(frequency):
     :return:
     :rtype:
     """
+    if isinstance(frequency, torch.Tensor):
+        return (
+                6.23 * torch.float_power(frequency / 1000, 2)
+                + 93.39 * frequency / 1000
+                + 28.52
+        )
+    else:
+        return (
+                6.23 * np.power(frequency / 1000, 2)
+                + 93.39 * frequency / 1000
+                + 28.52
+        )
 
-    return (
-            6.23 * np.power(frequency / 1000, 2)
-            + 93.39 * frequency / 1000
-            + 28.52
-    )
 
-
-def magnitude_spectrum(signal: np.array,
+def magnitude_spectrum(signal: Union[np.ndarray, torch.Tensor],
                        fs,
                        in_db=False):
+    if isinstance(signal, torch.Tensor):
 
-    # Number of samples in the signal.
-    n = len(signal)
+        # Make the tensor one-dimensional.
+        signal = signal.squeeze()
 
-    # Create a frequency axes
-    frequency = np.linspace(
-        0.0,
-        0.5 * fs,
-        n // 2
-    )
+        # Number of samples in the signal.
+        n = signal.shape[0]
 
-    # Calculate the magnitude spectrum
-    spectrum = np.abs(np.fft.fft(signal))[:(n // 2)]
+        # Create a frequency axes
+        frequency = torch.linspace(
+            0.0,
+            0.5 * fs,
+            n // 2 + 1
+        )
 
-    # Convert to dB
-    if in_db:
-        spectrum = mag2db(spectrum)
+        # Calculate the magnitude spectrum
+        spectrum = torch.abs(torch.fft.rfft(signal))
 
-    return frequency, spectrum
+        # Convert to dB
+        if in_db:
+            spectrum = mag2db(spectrum)
+
+        return frequency, spectrum
+
+    else:
+        # Number of samples in the signal.
+        n = len(signal)
+
+        # Create a frequency axes
+        frequency = np.linspace(
+            0.0,
+            0.5 * fs,
+            n // 2
+        )
+
+        # Calculate the magnitude spectrum
+        spectrum = np.abs(np.fft.fft(signal))[:(n // 2)]
+
+        # Convert to dB
+        if in_db:
+            spectrum = mag2db(spectrum)
+
+        return frequency, spectrum
+
+
+def envelope(x: Union[np.ndarray, torch.Tensor],
+             axis=-1):
+    if isinstance(x, torch.Tensor):
+        N = x.shape[axis]
+        Xf = torch.fft.fft(x, N)
+        h = torch.zeros(N)
+
+        if N % 2 == 0:
+            h[0] = h[N // 2] = 1
+            h[1: N // 2] = 2
+        else:
+            h[0] = 1
+            h[1: (N + 1) // 2] = 2
+
+        if x.ndim > 1:
+            new_shape = [1 for _ in range(x.ndim)]
+            new_shape[axis] = len(h)
+            h = h.reshape(*tuple(new_shape))
+
+        # Get the input envelope
+        amplitude_envelope = torch.abs(torch.fft.ifft(Xf * h))
+
+    else:
+        amplitude_envelope = np.abs(hilbert(x, axis=axis))
+
+    return amplitude_envelope

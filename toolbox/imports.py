@@ -8,6 +8,10 @@ import requests
 import soundfile as sf
 import sounddevice as sd
 import warnings
+import torch
+import torch.nn.functional as tnnf
+import torchaudio as ta
+import torchaudio.functional as taf
 
 from IPython.core.interactiveshell import InteractiveShell
 from IPython.display import display
@@ -20,3 +24,4 @@ from operator import itemgetter
 from pathlib import Path
 from resampy import resample
 from tqdm import tqdm
+from typing import Union

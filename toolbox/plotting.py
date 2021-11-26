@@ -1,4 +1,5 @@
 from matplotlib import pyplot as plt
+from toolbox.dsp import magnitude_spectrum
 from typing import AnyStr, List, Union, Sequence, Tuple
 
 
@@ -71,3 +72,20 @@ def apply_standard_formatting(figure: plt.Figure = None,
 
         if include_grid:
             axes.grid(linewidth=0.5)
+
+
+def plot_magnitude_spectrum(waveforms, fs):
+    if not isinstance(waveforms, dict):
+        waveforms = {'1': waveforms}
+
+    figure, axes = plt.subplots(figsize=(12, 8))
+
+    for name, waveform in waveforms.items():
+        frequency, spectrum = magnitude_spectrum(waveform, fs, in_db=True)
+        axes.semilogx(frequency, spectrum, label=f'{name}')
+        axes.set_xlabel('Frequency [Hz]')
+        axes.set_ylabel('Signal magnitude [dB]')
+        axes.set_xlim([1e2, 1e4])
+
+    axes.grid()
+    axes.legend()
