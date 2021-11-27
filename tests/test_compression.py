@@ -29,29 +29,23 @@ audio_samples, _ = t.data_loading.get_waveforms_synthetic_speech(
 # Get the first 3 seconds of the clean sample.
 waveform = audio_samples['clean'][: int(fs_model) * 3]
 
-# %% Initialize the dhasp model
+# Initialize the dhasp model
 dhasp = t.dhasp.DHASP(fs_model)
 
 # %% Get the outputs of the filters
 outputs_control_filter = dhasp.apply_filter('control', waveform)
-outputs_analysis_filter = dhasp.apply_filter('analysis', waveform)
 envelopes_control_filter = envelope(outputs_control_filter, axis=1)
 
-# %% Apply gain
+# %% Get dynamic range compression gain
 G = dhasp.calculate_G(outputs_control_filter)
-output_model_per_band = outputs_analysis_filter * db2mag(G)
-output_model = output_model_per_band.sum(dim=0)
-envelope_model = mag2db(envelope(output_model))
-
 
 # %% Visualize
-
 # The index of the filter and number of samples to show
-idx_filter_to_show = 2
-n_samples_to_show = int(waveform.shape[-1])
+idx_filter = 2
+n_samples = int(3e3)
 
 # Create the time axis for the plot
-time = np.arange(n_samples_to_show) / fs_model
+time = np.arange(n_samples) / fs_model
 
 # Initialize a list of curve handles.
 curves = list()
@@ -62,25 +56,22 @@ axes_right = axes.twinx()
 
 curves += axes.plot(
     time,
-    waveform.squeeze()[:n_samples_to_show],
-    label=f'Waveform'
+    outputs_control_filter[idx_filter, :n_samples],
+    label=f'Output of control filter'
 )
 
-curves += axes_right.plot(
+curves += axes.plot(
     time,
-    envelope_model[: n_samples_to_show],
-    label='Envelope',
-    color='red'
+    envelopes_control_filter[idx_filter, :n_samples],
+    label='Envelope'
 )
 
-# curves += axes_right.plot(time,
-#                           G[idx_filter_to_show, :n_samples_to_show],
-#                           color='red',
-#                           label='Dynamic range compression gain')
+curves += axes_right.plot(time,
+                          G[idx_filter, :n_samples],
+                          color='red',
+                          label='Dynamic range compression gain')
 
 axes.legend(curves, [curve.get_label() for curve in curves])
-# axes.set_title(f'Filter number {idx_filter_to_show + 1}')
+axes.set_title(f'Filter number: {idx_filter + 1}, '
+               f'$f_c$={dhasp.f_a[idx_filter].numpy()[0]:,.0f} Hz')
 axes.set_xlabel('Time [s]')
-# %% Play
-
-sd.play(output_model.squeeze(), fs_model)

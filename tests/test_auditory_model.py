@@ -29,23 +29,22 @@ audio_samples, _ = t.data_loading.get_waveforms_synthetic_speech(
 # Get the first 3 seconds of the clean sample.
 waveform = audio_samples['clean'][: int(fs_model) * 3]
 
-# Initialize the dhasp model
+# %% Initialize the dhasp model
 dhasp = t.dhasp.DHASP(fs_model)
 
-# %% Get the outputs of the filters
-outputs_control_filter = dhasp.apply_filter('control', waveform)
-envelopes_control_filter = envelope(outputs_control_filter, axis=1)
 
-# %% Get dynamic range compression gain
-G = dhasp.calculate_G(outputs_control_filter)
+# %% Apply gain
+output_model, envelope_model = dhasp.calculate_output(waveform)
+
 
 # %% Visualize
+
 # The index of the filter and number of samples to show
-idx_filter_to_show = 2
-n_samples_to_show = int(3e3)
+idx_filter = 2
+n_samples = int(waveform.shape[-1])
 
 # Create the time axis for the plot
-time = np.arange(n_samples_to_show) / fs_model
+time = np.arange(n_samples) / fs_model
 
 # Initialize a list of curve handles.
 curves = list()
@@ -56,23 +55,18 @@ axes_right = axes.twinx()
 
 curves += axes.plot(
     time,
-    outputs_control_filter[idx_filter_to_show,
-    :n_samples_to_show],
-    label=f'Output of control filter'
+    output_model.squeeze()[idx_filter, :n_samples],
+    label=f'Output of the auditory model'
 )
 
-curves += axes.plot(
+curves += axes_right.plot(
     time,
-    envelopes_control_filter[idx_filter_to_show,
-    :n_samples_to_show],
-    label='Envelope'
+    envelope_model[idx_filter, :n_samples],
+    label='Envelope of the output [dB]',
+    color='red'
 )
-
-curves += axes_right.plot(time,
-                          G[idx_filter_to_show, :n_samples_to_show],
-                          color='red',
-                          label='Dynamic range compression gain')
 
 axes.legend(curves, [curve.get_label() for curve in curves])
-axes.set_title(f'Filter number {idx_filter_to_show + 1}')
+axes.set_title(f'Filter number: {idx_filter + 1}, '
+               f'$f_c$={dhasp.f_a[idx_filter].numpy()[0]:,.0f} Hz')
 axes.set_xlabel('Time [s]')

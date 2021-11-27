@@ -187,7 +187,7 @@ class DHASP:
         G = (-self.attn_o
              - (1 - 1 / self.CR) * (E_hat_c - self.theta_low))
 
-        return(G)
+        return (G)
 
     def apply_filter(self,
                      filter_variant,
@@ -211,11 +211,90 @@ class DHASP:
 
         return response
 
-    def apply_compression(self,
-                          G: torch.Tensor,
-                          outputs_anaysis_flter: torch.Tensor):
+    def calculate_output(self,
+                         waveform: torch.Tensor):
 
-        return outputs_anaysis_flter * db2mag(G)
+        # Get the outputs of the control and analysis filters
+        outputs_control_filter = self.apply_filter('control', waveform)
+        outputs_analysis_filter = self.apply_filter('analysis', waveform)
+
+        # Calculate the dynamic range compression gain.
+        G = self.calculate_G(outputs_control_filter)
+
+        # Calculate the output of the auditory model in each frequency band.
+        output = outputs_analysis_filter * db2mag(G)
+
+        # Calculate the envelopes of the output in dB in each frequency band.
+        output_envelope = mag2db(envelope(output))
+
+        return output, output_envelope
+
+    def calculate_C(self,
+                    from_value: torch.Tensor,
+                    from_value_type='smoothed_output_envelope'):
+
+        # Compute the tensor with indices of the auditory filters
+        i = torch.arange(self.I).reshape(self.I, 1)
+
+        # Compute the tensor with inices of the basis functions
+        j = torch.arange(2, 7)
+
+        # Compute the basis functions for every combination oi i (rows)
+        # and j (columns).
+        bas = torch.cos((j - 1) * np.pi * i / (self.I - 1))
+
+        # Get the smoothed envelope of the output of the auditory model.
+        if from_value_type == 'smoothed_output_envelope':
+            output_envelope_smoothed = from_value
+
+        elif from_value_type == 'waveform':
+            waveform = from_value
+            _, output_envelope = self.calculate_output(waveform)
+            output_envelope_smoothed, _ = \
+                self.smooth_output_envelope(output_envelope)
+
+        else:
+            raise ValueError(f'Invalid from value type: "{from_value_type}".')
+
+        # Compute the cepstral sequence:
+        C = torch.matmul(bas.T, output_envelope_smoothed)
+
+        return C
+
+    def smooth_output_envelope(self, output_envelope: torch.Tensor):
+        """
+        :param envelope_model:  Tensor with 32 rows representing the envelopes
+        (ind dB) of the output of the auditory model in each filterbank.
+        :type envelope_model: torch.Tensor
+        :return:
+        :rtype:
+        """
+
+        # Make sure that the data type is "float32"
+        output_envelope = output_envelope.to(torch.float32)
+
+        # Number of samples corresponding to 16 ms.
+        n_samples_16_ms = int(16e-3 * self.fs)
+
+        # Overlap is set to 50 %
+        stride = n_samples_16_ms // 2
+
+        # Get the weights of the Hanning window we will use for smoothing.
+        weights = torch.hann_window(n_samples_16_ms)
+        weights = weights / weights.sum()
+
+        # Smooth the envelope.
+        envelope_smoothed = tnnf.conv1d(
+            output_envelope.reshape(
+                output_envelope.shape[0],
+                1,
+                output_envelope.shape[1]
+            ),
+            weights.reshape(1, 1, -1),
+            stride=stride
+        ).squeeze(1)
+
+        return envelope_smoothed, stride
 
     def show_filterbank_responses(
             self,
