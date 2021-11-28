@@ -22,6 +22,5 @@ from IPython.display import YouTubeVideo
 from IPython import get_ipython
 from operator import itemgetter
 from pathlib import Path
-from resampy import resample
 from tqdm import tqdm
 from typing import Union

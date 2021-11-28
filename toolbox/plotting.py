@@ -73,8 +73,10 @@ def apply_standard_formatting(figure: plt.Figure = None,
         if include_grid:
             axes.grid(linewidth=0.5)
 
+    figure.tight_layout()
 
-def plot_magnitude_spectrum(waveforms, fs):
+
+def plot_magnitude_spectrum(waveforms, fs, title=None):
     if not isinstance(waveforms, dict):
         waveforms = {'1': waveforms}
 
@@ -89,3 +91,11 @@ def plot_magnitude_spectrum(waveforms, fs):
 
     axes.grid()
     axes.legend()
+
+    if title is not None:
+        axes.set_title(title)
+
+    apply_standard_formatting(figure)
+    figure.tight_layout()
+    plt.show()
+

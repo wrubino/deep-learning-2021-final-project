@@ -1,12 +1,10 @@
 # %% Imports
-import matplotlib.pyplot as plt
 
-from IPython import get_ipython, InteractiveShell
 from toolbox.initialization import *
-from toolbox.dsp import envelope, magnitude_spectrum
 
 # %% Load Audio
-# Load
+
+# Load variations of the same speech segment in different conditions.
 fs_model = 24e3
 audio_samples, _ = t.data_loading.get_waveforms_synthetic_speech(
     dict(
@@ -17,27 +15,54 @@ audio_samples, _ = t.data_loading.get_waveforms_synthetic_speech(
     fs_model
 )
 
-# Get the waveform of the clean signal
-waveform = audio_samples['clean']
-display(waveform)
+# Get the first 3 seconds of the clean sample.
+waveform = audio_samples['clean'][: int(fs_model) * 3]
 
+# Make 2 versions, quiet and loud.
+waveforms = torch.vstack([
+    waveform,
+    2 * waveform
+])
 
-# %% Envelope
-time_to_show_s = 0.3
+# %% Calculate envelopes
+
+envelopes = t.dsp.envelope(waveforms)
+
+# %% Visualize
+
+# Create a time axis.
+time_to_show_s = 0.1
 samples_to_show = int(time_to_show_s * fs_model)
-waveform = waveform.squeeze()[:samples_to_show]
-envelope_waveform = envelope(waveform).squeeze()[:samples_to_show]
+time_axis = np.arange(samples_to_show) / fs_model
 
 # Plot filter output and its envelope.
-figure, axes = plt.subplots(figsize=(12, 8))
-axes.plot(np.arange(len(waveform)) / fs_model,
-          waveform,
-          label='Waveform')
+figure, axess = plt.subplots(2, 1, figsize=(12, 8))
 
-axes.plot(np.arange(len(envelope_waveform)) / fs_model,
-          envelope_waveform,
-          label='Envelope')
+axess[0].plot(time_axis,
+              waveforms[0, :samples_to_show],
+              label='Waveform, 0 dB')
 
-axes.legend()
-axes.set_xlabel('Time [s]')
-axes.set_ylabel('Signal value')
+axess[1].plot(time_axis,
+              waveforms[1, :samples_to_show],
+              label='Waveform, 6 dB')
+
+axess[0].plot(time_axis,
+              envelopes[0, :samples_to_show],
+              label='Envelope, 0 dB')
+
+axess[1].plot(time_axis,
+              envelopes[1, :samples_to_show],
+              label='Envelope, 6 dB')
+
+for axes in axess.flatten():
+    axes.legend()
+    axes.set_xlabel('Time [s]')
+    axes.set_ylabel('Signal')
+    axes.grid()
+
+axess[0].set_title('Calculation of envelope for signals with 2 '
+                   'different amplitudes')
+
+t.plotting.apply_standard_formatting(figure)
+plt.show()
+

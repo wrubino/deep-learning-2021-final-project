@@ -1,15 +1,7 @@
-import datetime
-import numpy as np
-import toolbox.dsp
-import torch
-import torchaudio as ta
-import torchaudio.functional as taf
-
 from toolbox.initialization import *
 from toolbox.dsp import db2mag, mag2db, mel2hz, hz2mel, erb, envelope
-from scipy.signal import kaiserord, lfilter, firwin, freqz
+from scipy.signal import freqz
 from scipy.interpolate import interp1d
-from typing import Union, io
 
 
 class DHASP:
@@ -164,11 +156,30 @@ class DHASP:
     def __to_dbspl(self, magnitude: torch.Tensor):
         return mag2db(magnitude) - self.db_ref_60_db + 60
 
+    def apply_filter(self,
+                     filter_variant,
+                     waveforms: torch.Tensor):
+        # Get the filter coefficients.
+        h = (self
+             .__get_filter_coefficents(filter_variant)
+             .to(torch.float32))
+
+        # Compute the filter responses.
+        return tnnf.conv1d(
+            waveforms.reshape(
+                waveforms.shape[0],
+                1,
+                waveforms.shape[1]
+            ),
+            h.reshape(h.shape[0], 1, h.shape[1]),
+            padding=h.shape[-1] // 2
+        )
+
     def calculate_G(self, outputs_control_filter):
         # Calculate envelopes of the outputs of the control filter.
         E_c = self.__to_dbspl(
-            envelope(outputs_control_filter, axis=1)
-        ).to(torch.float64)
+            envelope(outputs_control_filter).to(torch.float64)
+        )
 
         # Apply the thresholds
         E_hat_c = torch.where(
@@ -189,34 +200,12 @@ class DHASP:
 
         return (G)
 
-    def apply_filter(self,
-                     filter_variant,
-                     signal: torch.Tensor):
-        # Get the filter coefficients.
-        h = self.__get_filter_coefficents(filter_variant)
-
-        # Preallocate the response matrix.
-        response = torch.zeros((h.shape[0], signal.shape[1]))
-
-        # Compute the denominator
-        a = torch.zeros(h.shape[1])
-        a[0] = 1
-
-        # Apply the filters.
-        for i in range(h.shape[0]):
-            response[i, :] = taf.lfilter(signal,
-                                         a,
-                                         h[i, :].squeeze().to(torch.float32),
-                                         clamp=True)
-
-        return response
-
     def calculate_output(self,
-                         waveform: torch.Tensor):
+                         waveforms: torch.Tensor):
 
         # Get the outputs of the control and analysis filters
-        outputs_control_filter = self.apply_filter('control', waveform)
-        outputs_analysis_filter = self.apply_filter('analysis', waveform)
+        outputs_control_filter = self.apply_filter('control', waveforms)
+        outputs_analysis_filter = self.apply_filter('analysis', waveforms)
 
         # Calculate the dynamic range compression gain.
         G = self.calculate_G(outputs_control_filter)
@@ -228,6 +217,58 @@ class DHASP:
         output_envelope = mag2db(envelope(output))
 
         return output, output_envelope
+
+    def smooth_output_envelope(self, output_envelope: torch.Tensor):
+        """
+        :param envelope_model:  Tensor with 32 rows representing the envelopes
+        (ind dB) of the output of the auditory model in each filterbank.
+        :type envelope_model: torch.Tensor
+        :return:
+        :rtype:
+        """
+
+        # Make sure that the data type is "float32".
+        output_envelope = output_envelope.to(torch.float32)
+
+        # Number of samples corresponding to 16 ms.
+        n_samples_16_ms = int(16e-3 * self.fs)
+
+        # Overlap is set to 50 %
+        stride = n_samples_16_ms // 2
+
+        # Get the weights of the Hanning window we will use for smoothing.
+        weights = torch.hann_window(n_samples_16_ms)
+        weights = weights / weights.sum()
+
+        # Smooth the envelope.
+
+        # Initialize the variable containing the smoothed envelope
+        # (so that the function will always have an output)
+        envelope_smoothed = None
+
+        for idx_waveform in range(output_envelope.shape[0]):
+            envelope = output_envelope[idx_waveform, :, :]
+
+            envelope_smoothed_temp = tnnf.conv1d(
+                envelope.reshape(envelope.shape[0],
+                                 1,
+                                 envelope.shape[1]),
+                weights.reshape(1, 1, -1),
+                stride=stride
+            ).permute((1, 0, -1))
+
+            # Gather the smoothed envelopes in a tensor whose first two
+            # dimensions are the same as the ones of the non-smoothed
+            # envelopes.
+            if idx_waveform == 0:
+                envelope_smoothed = envelope_smoothed_temp
+            else:
+                envelope_smoothed = torch.cat(
+                    [envelope_smoothed, envelope_smoothed_temp],
+                    dim=0
+                )
+
+        return envelope_smoothed, stride
 
     def calculate_C(self,
                     from_value: torch.Tensor,
@@ -247,55 +288,157 @@ class DHASP:
         if from_value_type == 'smoothed_output_envelope':
             output_envelope_smoothed = from_value
 
-        elif from_value_type == 'waveform':
-            waveform = from_value
-            _, output_envelope = self.calculate_output(waveform)
+        elif from_value_type == 'waveforms':
+            waveforms = from_value
+            _, output_envelope = self.calculate_output(waveforms)
             output_envelope_smoothed, _ = \
                 self.smooth_output_envelope(output_envelope)
 
         else:
             raise ValueError(f'Invalid from value type: "{from_value_type}".')
 
+        # Initialize the output variable.
+        C = torch.zeros([
+            output_envelope_smoothed.shape[0],
+            j.shape[-1],
+            output_envelope_smoothed.shape[2]
+        ])
+
         # Compute the cepstral sequence:
-        C = torch.matmul(bas.T, output_envelope_smoothed)
+        for idx_waveform in range(output_envelope_smoothed.shape[0]):
+            C[idx_waveform, :, :] = torch.matmul(
+                bas.T,
+                output_envelope_smoothed[idx_waveform, :, :]
+            )
 
-        return C
+        if from_value_type == 'smoothed_output_envelope':
+            return C
+        elif from_value_type == 'waveforms':
+            return C, output_envelope_smoothed
 
-    def smooth_output_envelope(self, output_envelope: torch.Tensor):
+    def calculate_R(self,
+                    C_r: torch.Tensor,
+                    C_p: torch.Tensor):
         """
-        :param envelope_model:  Tensor with 32 rows representing the envelopes
-        (ind dB) of the output of the auditory model in each filterbank.
-        :type envelope_model: torch.Tensor
-        :return:
-        :rtype:
+        Calculate correlation of cepstral sequences
+        C_r: Target cepstral sequence:  Tensor of size (j,  m)
+        C_p: Cepstral sequence of the processed sequences:
+             Tensor of size (n_waveforms, j, m)
+        Output: Tensor of size (n_waveforms, j)
+        """
+        # Initialize R
+        R = torch.zeros(
+            C_p.shape[0],
+            C_p.shape[1]
+        )
+
+        # Calculate the correlations for each processed waveform.
+        for idx_waveform in range(C_p.shape[0]):
+            c_p = C_p[idx_waveform, :]
+            R[idx_waveform, :] = (
+                    (C_r * c_p).sum(dim=1)
+                    / (
+                            torch.linalg.norm(C_r, dim=1)
+                            * torch.linalg.norm(c_p, dim=1)
+                    )
+            )
+
+        return R
+
+    def calculate_L_e(self,
+                      E_r: torch.Tensor,
+                      E_p: torch.Tensor):
+        """
+        Calculate correlation of cepstral sequences
+        E_r: Target smoothed output envelope:  Tensor of size (i,  m)
+        E_p: Smoothed output envelope of the processed sequences:
+             Tensor of size (n_waveforms, i, m)
+        Output: Tensor of size (n_waveforms, i)
         """
 
-        # Make sure that the data type is "float32"
-        output_envelope = output_envelope.to(torch.float32)
+        # Initialize R
+        L_e = torch.zeros(
+            E_p.shape[0],
+            E_p.shape[1]
+        )
 
-        # Number of samples corresponding to 16 ms.
-        n_samples_16_ms = int(16e-3 * self.fs)
+        # Calculate the L_e for each processed waveform.
+        for idx_waveform in range(E_p.shape[0]):
+            e_p = E_p[idx_waveform, :, :]
+            l_e = e_p - E_r
+            l_e[l_e < 0] = 0
+            l_e = l_e.sum(dim=1)
+            L_e[idx_waveform, :] = l_e
 
-        # Overlap is set to 50 %
-        stride = n_samples_16_ms // 2
+            return L_e
 
-        # Get the weights of the Hanning window we will use for smoothing.
-        weights = torch.hann_window(n_samples_16_ms)
-        weights = weights / weights.sum()
+    def calculate_L(self,
+                    R: torch.Tensor,
+                    L_e: torch.Tensor,
+                    alpha=1e-5):
+        """
+        Calculate total loss.
+        R: Correlation, tensor, size: (n_waveforms, j)
+        L_e_: Energy loss, tensor, size (n_waveforms, i)
+        alpha: energy loss weight
+        """
 
-        # Smooth the envelope.
-        envelope_smoothed = tnnf.conv1d(
-            output_envelope.reshape(
-                output_envelope.shape[0],
-                1,
-                output_envelope.shape[1]
-            ),
-            weights.reshape(1, 1, -1),
-            stride=stride
-        ).squeeze(1)
+        return -R.mean(dim=1) + alpha * L_e.sum(dim=1)
 
-        return envelope_smoothed, stride
+    def calculate_loss(self,
+                       waveforms: torch.Tensor,
+                       waveform_target: torch.Tensor,
+                       alpha: float):
+        """
+        waveforms: tensor of size (n_waveforms, n_samples)
+        waveforms_target: tensor of size (1, n_samples)
+        """
 
+        # Put all waveforms in one tensor.
+        all_waveforms = torch.vstack([
+            waveform_target,
+            waveforms
+        ])
+
+        # Get the outputs of the control and analysis filters
+        outputs_control_filter = self.apply_filter('control', all_waveforms)
+        outputs_analysis_filter = self.apply_filter('analysis', all_waveforms)
+
+        # Calculate the dynamic range compression gain.
+        G = self.calculate_G(outputs_control_filter)
+
+        # Calculate the output of the auditory model in each frequency band.
+        output = outputs_analysis_filter * db2mag(G)
+
+        # Calculate the envelopes of the output in dB in each frequency band.
+        output_envelope = mag2db(envelope(output))
+
+        # Smooth the output envelope
+        E, _ = self.smooth_output_envelope(output_envelope)
+
+        # Calculate the cepstral sequences
+        C = self.calculate_C(E,
+                             from_value_type='smoothed_output_envelope')
+
+        # Separate the target from the rest.
+        E_r = E[0, :, :].squeeze(0)
+        E_p = E[1:, :, :]
+
+        C_r = C[0, :, :].squeeze(0)
+        C_p = C[1:, :, :]
+
+        # Calculate cepstral correlations.
+        R = self.calculate_R(C_r, C_p)
+
+        # Calculate the energy loss.
+        L_e = self.calculate_L_e(E_r, E_p)
+
+        # Calculate the total loss.
+        L = self.calculate_L(R, L_e)
+
+        return L, R, L_e
+
+    # --------- Plotting functions ---------
     def show_filterbank_responses(
             self,
             filter_variant,
@@ -327,7 +470,7 @@ class DHASP:
                               mag2db(np.abs(response)),
                               linewidth=2,
                               label=f'$f_c$ = {frequency:,.0f} Hz')
-                axes.set_xlabel('Frequency [Hz])')
+                axes.set_xlabel('Frequency [Hz]')
                 axes.set_ylabel('Gain [dB]')
                 axes.set_title(
                     f'Frequency response of the filters in the '
@@ -336,6 +479,7 @@ class DHASP:
 
         axes.legend()
         axes.grid()
+        t.plotting.apply_standard_formatting(figure)
 
     def show_filterbank_joint_response(self,
                                        filter_variant):
@@ -360,22 +504,4 @@ class DHASP:
                        f' filterbank')
         axes.grid()
 
-    def compression(self, filter_variant):
-        if filter_variant == 'analysis':
-            frequencies = self.f_a
-        elif filter_variant == 'control':
-            frequencies = self.f_c
-        else:
-            raise ValueError(f'Invalid filter variant: "{filter_variant}".'
-                             f'Fiter variant should nw "analysis" or '
-                             f'"control".')
-
-        # Lower and upper threshold
-        theta_low = self.attn_o + 30
-        theta_high = 100 * np.ones_like(self.attn_o)
-
-        # Compression rate at frequencies
-        CR = interp1d(
-            np.array([80, 8e3]),
-            np.array([1.25, 3.5]),
-        )(frequencies)
+        t.plotting.apply_standard_formatting(figure)
