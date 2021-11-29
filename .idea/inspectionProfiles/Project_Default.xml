@@ -5,12 +5,10 @@
       <option name="ignoredPackages">
         <value>
           <list size="1">
-            <item index="0" class="java.lang.String" itemvalue="project" />
+            <item index="0" class="java.lang.String" itemvalue="ipython" />
           </list>
         </value>
       </option>
     </inspection_tool>
-    <inspection_tool class="PyPep8Inspection" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WARNING" enabled_by_default="true" />
   </profile>
 </component>
