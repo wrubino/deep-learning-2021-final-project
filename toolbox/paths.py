@@ -53,6 +53,26 @@ class ProjectPaths:
 
         self.data = Data(self)
 
+        # Graphics
+        class Graphics:
+            def __init__(self, paths):
+                # Root folder for the graphics.
+                self.root = paths.resources / 'graphics'
+
+                self.dhasp_proposed_framework = \
+                    self.root / 'dhasp_proposed_framework.jpg'
+
+                self.dhasp_original_framework = \
+                    self.root / 'dhasp_original_framework.jpg'
+
+                self.dhasp_auditory_model = \
+                    self.root / 'dhasp_differentiable_auditory_model.jpg'
+
+                # Folder for the test data.
+                self.test = self.root / 'test'
+
+        self.graphics = Graphics(self)
+
         # Cache
         class Cache:
             def __init__(self, paths):
