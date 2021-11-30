@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="Explanation of DHASP initiated.">
-      <change beforePath="$PROJECT_DIR$/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/main.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_apply_filter.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_apply_filter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_dhasp_filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_dhasp_filters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/dhasp.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/dhasp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/plotting.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/plotting.py" afterDir="false" />
-    </list>
+    <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -255,6 +249,7 @@
     <MESSAGE value="Report initiated" />
     <MESSAGE value="Explainer notebook progressing. Data loading done." />
     <MESSAGE value="Explanation of DHASP initiated." />
-    <option name="LAST_COMMIT_MESSAGE" value="Explanation of DHASP initiated." />
+    <MESSAGE value="Signal EQ implemented and explained in the report." />
+    <option name="LAST_COMMIT_MESSAGE" value="Signal EQ implemented and explained in the report." />
   </component>
 </project>
