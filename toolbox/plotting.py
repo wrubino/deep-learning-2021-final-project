@@ -1,6 +1,9 @@
 from matplotlib import pyplot as plt
-from toolbox.dsp import magnitude_spectrum
+import numpy as np
+from scipy.signal import freqz
+from toolbox.dsp import magnitude_spectrum, mag2db
 from typing import AnyStr, List, Union, Sequence, Tuple
+
 
 
 def format_axes(
@@ -99,3 +102,35 @@ def plot_magnitude_spectrum(waveforms, fs, title=None):
     figure.tight_layout()
     plt.show()
 
+
+
+def plot_filter_response(h, fs, title=None, in_db=True):
+    if not isinstance(h, dict):
+        h = {'1': h}
+
+    figure, axes = plt.subplots(figsize=(12, 8))
+
+    for name, h_filter in h.items():
+        frequency_axis, response =  freqz(h_filter, fs=fs)
+
+        if in_db:
+            response = mag2db(np.abs(response))
+            response_unit = ' [dB]'
+        else:
+            response_unit = ''
+
+        axes.semilogx(frequency_axis, response, label=f'{name}')
+        axes.set_xlabel('Frequency [Hz]')
+        axes.set_ylabel('Filter response' + response_unit)
+        axes.set_xlim([1e2, 1e4])
+
+    axes.grid()
+    axes.legend()
+
+    if title is not None:
+        axes.set_title(title)
+
+    apply_standard_formatting(figure)
+    figure.tight_layout()
+
+    return axes

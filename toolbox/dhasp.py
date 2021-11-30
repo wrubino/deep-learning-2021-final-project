@@ -95,6 +95,16 @@ class DHASP:
 
         self.CR = torch.from_numpy(CR)
 
+        # Frequencies and bandwidths for the EQ that will be applied to noisy
+        # signal when optimizing for highest intelligibility.
+        self.f_eq = torch.from_numpy(np.geomspace(100, 8e3, 8)).reshape(-1, 1)
+        self.b_eq = self.f_eq / 2.3
+
+        # Calculate the fir filter coefficients for the EQ
+        self.h_eq = self.__calculate_h('eq')
+
+
+
     def __calculate_h(self, filter_variant):
         """
         Transfer function of the FIR filters in the analysis filterbank.
@@ -112,6 +122,10 @@ class DHASP:
         elif filter_variant == 'control':
             f = self.f_c
             b = self.b_c
+
+        elif filter_variant == 'eq':
+            f = self.f_eq
+            b = self.b_eq
 
         else:
             raise ValueError(f'Invalid filter variant: "{filter_variant}".'
@@ -138,7 +152,7 @@ class DHASP:
             axis=0
         )
 
-        h = h / peak_gain.reshape(self.I, 1)
+        h = h / peak_gain.reshape(-1, 1)
 
         return h
 
@@ -148,10 +162,13 @@ class DHASP:
 
         elif filter_variant == 'control':
             return self.h_c
+
+        elif filter_variant == 'eq':
+            return self.h_eq
         else:
             raise ValueError(f'Invalid filter variant: "{filter_variant}".'
-                             f'Fiter variant should nw "analysis" or '
-                             f'"control".')
+                             f'Filter variant should be "analysis", '
+                             f'"control", or "eq".')
 
     def __to_dbspl(self, magnitude: torch.Tensor):
         return mag2db(magnitude) - self.db_ref_60_db + 60
@@ -454,10 +471,12 @@ class DHASP:
             frequencies = self.f_c.squeeze().numpy()
             h = self.h_c.numpy()
 
+        elif filter_variant == 'eq':
+            frequencies = self.f_eq.squeeze().numpy()
+            h = self.h_eq.numpy()
+
         else:
-            raise ValueError(f'Invalid filter variant: "{filter_variant}".'
-                             f'Fiter variant should be "analysis" or '
-                             f'"control".')
+            raise ValueError(f'Invalid filter variant: "{filter_variant}".')
 
         # Create figure and axes for the plot
         figure, axes = plt.subplots(figsize=(12, 8))
@@ -473,8 +492,8 @@ class DHASP:
                 axes.set_xlabel('Frequency [Hz]')
                 axes.set_ylabel('Gain [dB]')
                 axes.set_title(
-                    f'Frequency response of the filters in the '
-                    f'{filter_variant} filterbank.'
+                    f'Frequency response of the filters in the filterbank: '
+                    f'"{filter_variant}".'
                     f'\nShowing every {show_every} filters.')
 
         axes.legend()
@@ -500,8 +519,8 @@ class DHASP:
                       linewidth=2, )
         axes.set_xlabel('Frequency [Hz]')
         axes.set_ylabel('Gain [dB]')
-        axes.set_title(f'Joint frequency response of the {filter_variant}'
-                       f' filterbank')
+        axes.set_title(f'Joint frequency response of the filterbank: '
+                       f'"{filter_variant}".')
         axes.grid()
 
         t.plotting.apply_standard_formatting(figure)
