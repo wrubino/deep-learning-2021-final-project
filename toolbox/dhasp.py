@@ -493,8 +493,8 @@ class DHASP:
                 axes.set_ylabel('Gain [dB]')
                 axes.set_title(
                     f'Frequency response of the filters in the filterbank: '
-                    f'"{filter_variant}".'
-                    f'\nShowing every {show_every} filters.')
+                    f'"{filter_variant}"'
+                    f'\nShowing every {show_every} filters')
 
         axes.legend()
         axes.grid()
@@ -520,7 +520,7 @@ class DHASP:
         axes.set_xlabel('Frequency [Hz]')
         axes.set_ylabel('Gain [dB]')
         axes.set_title(f'Joint frequency response of the filterbank: '
-                       f'"{filter_variant}".')
+                       f'"{filter_variant}"')
         axes.grid()
 
         t.plotting.apply_standard_formatting(figure)
