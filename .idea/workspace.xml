@@ -7,6 +7,8 @@
     <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/main.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_compression.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_compression.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_envelope.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_envelope.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/toolbox/dhasp.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/dhasp.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -256,6 +258,7 @@
     <MESSAGE value="Signal EQ implemented and explained in the report." />
     <MESSAGE value="Report: explaining bandwidths" />
     <MESSAGE value="EQ explained EVEN better, with responses shown." />
-    <option name="LAST_COMMIT_MESSAGE" value="EQ explained EVEN better, with responses shown." />
+    <MESSAGE value="Compressor explained" />
+    <option name="LAST_COMMIT_MESSAGE" value="Compressor explained" />
   </component>
 </project>

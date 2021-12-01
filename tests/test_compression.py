@@ -40,6 +40,7 @@ envelopes_control_filter = t.dsp.envelope(outputs_control_filter)
 # %% Get dynamic range compression gain
 G = dhasp.calculate_G(outputs_control_filter)
 
+
 # %% Visualize
 # The index of the filter and number of samples to show
 idx_filter = 2
@@ -62,20 +63,20 @@ for idx_waveform, (waveform_name, axes) \
     curves += axes.plot(
         time,
         outputs_control_filter[idx_waveform, idx_filter, :n_samples],
-        label=f'Output of control filter'
+        label=f'Left axis: Output of control filter'
     )
 
     curves += axes.plot(
         time,
         envelopes_control_filter[idx_waveform, idx_filter, :n_samples],
-        label='Envelope'
+        label='Left axis: Envelope'
     )
 
     curves += axes_right.plot(
         time,
         G[idx_waveform, idx_filter, :n_samples],
         color='red',
-        label='Dynamic range compression gain'
+        label='Right axis: Compression gain [dB]'
     )
 
     axes.grid()
@@ -92,6 +93,8 @@ for idx_waveform, (waveform_name, axes) \
                    f'Filter number: {idx_filter + 1}, '
                    f'$f_c$={dhasp.f_a[idx_filter].numpy()[0]:,.0f} Hz')
     axes.set_xlabel('Time [s]')
+    axes.set_ylabel('Signal value')
+    axes_right.set_ylabel('Compression gain [dB]')
 
 t.plotting.apply_standard_formatting(figure, include_grid=False)
 figure.tight_layout(rect=[0, 0, 1, 1])

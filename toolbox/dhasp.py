@@ -524,3 +524,7 @@ class DHASP:
         axes.grid()
 
         t.plotting.apply_standard_formatting(figure)
+
+        # Lower the yaxis range for the eq filter
+        if filter_variant == 'eq':
+            axes.set_ylim([-20, 10])

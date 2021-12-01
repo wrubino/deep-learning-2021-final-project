@@ -40,28 +40,32 @@ figure, axess = plt.subplots(2, 1, figsize=(12, 8))
 
 axess[0].plot(time_axis,
               waveforms[0, :samples_to_show],
-              label='Waveform, 0 dB')
+              label='Waveform')
 
 axess[1].plot(time_axis,
               waveforms[1, :samples_to_show],
-              label='Waveform, 6 dB')
+              label='Waveform')
 
 axess[0].plot(time_axis,
               envelopes[0, :samples_to_show],
-              label='Envelope, 0 dB')
+              label='Envelope')
 
 axess[1].plot(time_axis,
               envelopes[1, :samples_to_show],
-              label='Envelope, 6 dB')
+              label='Envelope')
+
+axess[0].set_title('Calculation of envelope for signals with 2 '
+                   'different amplitudes'
+                   '\n\nOriginal signal')
+axess[1].set_title('Original signal + 6 dB')
 
 for axes in axess.flatten():
     axes.legend()
     axes.set_xlabel('Time [s]')
-    axes.set_ylabel('Signal')
+    axes.set_ylabel('Signal value')
     axes.grid()
 
-axess[0].set_title('Calculation of envelope for signals with 2 '
-                   'different amplitudes')
+
 
 t.plotting.apply_standard_formatting(figure)
 plt.show()
