@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/utilities.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/main.ipynb" afterDir="false" />
     </list>
@@ -62,7 +61,7 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -254,6 +253,7 @@
     <MESSAGE value="Explainer notebook progressing. Data loading done." />
     <MESSAGE value="Explanation of DHASP initiated." />
     <MESSAGE value="Signal EQ implemented and explained in the report." />
-    <option name="LAST_COMMIT_MESSAGE" value="Signal EQ implemented and explained in the report." />
+    <MESSAGE value="Report: explaining bandwidths" />
+    <option name="LAST_COMMIT_MESSAGE" value="Report: explaining bandwidths" />
   </component>
 </project>
