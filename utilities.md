@@ -1,0 +1,7 @@
+- [HASPI speech intelligibility auditory processing model](https://www.sciencedirect.com/science/article/pii/S0167639320300431)
+- 
+- [DHASP article](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9414571)
+- 
+- [TIMIT speech dataset](https://academictorrents.com/details/34e2b78745138186976cbc27939b1b34d18bd5b3)
+- 
+- [Suggested formulae for calculating auditory-filter bandwidths and excitation patterns](https://pubmed.ncbi.nlm.nih.gov/6630731/)
