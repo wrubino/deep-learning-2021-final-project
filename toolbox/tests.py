@@ -59,7 +59,7 @@ class Tests:
                       f'from the filterbank: "{filterbank}" on white noise'
             )
 
-    def test_cepstral_correlation_and_total_loss(self):
+    def test_cepstral_correlation_and_total_loss(self, alpha=1e-5):
         # %% Load Audio
 
         # Load audio samples representing the same speech segment in different
@@ -74,13 +74,13 @@ class Tests:
             fs_model
         )
 
-        # Specify the target (clean) waveform
-        waveform_target = audio_samples['clean']
-
         # Get the other versions of the waveform
         waveforms = torch.vstack(list(audio_samples.values()))
 
-        # Get the waveform names for plotting.
+        # Specify the target (clean) waveforms
+        waveform_target = audio_samples['clean'].expand(*waveforms.shape)        # Get the waveform names for plotting.
+
+        # Get the waveform names
         waveform_names = list(audio_samples.keys())
 
         # %% Initialize the dhasp model.
@@ -104,7 +104,6 @@ class Tests:
         L_e = dhasp.calculate_L_e(E_r, E_p)
 
         # %% Calculate the total loss
-        alpha = 1e-5
         L = dhasp.calculate_L(R, L_e, alpha)
 
         # %% Calculate everything in one hook.

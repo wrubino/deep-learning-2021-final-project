@@ -5,7 +5,6 @@ from scipy.signal import freqz
 from scipy.interpolate import interp1d
 
 
-
 class DHASP:
     """
     Based on:
@@ -104,8 +103,6 @@ class DHASP:
 
         # Calculate the fir filter coefficients for the EQ
         self.h_eq = self.__calculate_h('eq')
-
-
 
     def __calculate_h(self, filter_variant):
         """
@@ -343,27 +340,20 @@ class DHASP:
                     C_p: torch.Tensor):
         """
         Calculate correlation of cepstral sequences
-        C_r: Target cepstral sequence:  Tensor of size (j,  m)
+        C_r: Target cepstral sequence:  Tensor of size (n_waveforms, j,  m)
         C_p: Cepstral sequence of the processed sequences:
              Tensor of size (n_waveforms, j, m)
         Output: Tensor of size (n_waveforms, j)
         """
-        # Initialize R
-        R = torch.zeros(
-            C_p.shape[0],
-            C_p.shape[1]
-        )
 
-        # Calculate the correlations for each processed waveform.
-        for idx_waveform in range(C_p.shape[0]):
-            c_p = C_p[idx_waveform, :]
-            R[idx_waveform, :] = (
-                    (C_r * c_p).sum(dim=1)
-                    / (
-                            torch.linalg.norm(C_r, dim=1)
-                            * torch.linalg.norm(c_p, dim=1)
-                    )
-            )
+        # Calculate the cepstral correlation
+        R = (
+                (C_r * C_p).sum(dim=2)
+                / (
+                        torch.linalg.norm(C_r, dim=2)
+                        * torch.linalg.norm(C_p, dim=2)
+                )
+        )
 
         return R
 
@@ -372,27 +362,16 @@ class DHASP:
                       E_p: torch.Tensor):
         """
         Calculate correlation of cepstral sequences
-        E_r: Target smoothed output envelope:  Tensor of size (i,  m)
+        E_r: Target smoothed output envelope:  Tensor of size (n_waveforms, i,  m)
         E_p: Smoothed output envelope of the processed sequences:
              Tensor of size (n_waveforms, i, m)
         Output: Tensor of size (n_waveforms, i)
         """
+        L_e = E_p - E_r
+        L_e[L_e < 0] = 0
+        L_e = L_e.sum(dim=2)
 
-        # Initialize R
-        L_e = torch.zeros(
-            E_p.shape[0],
-            E_p.shape[1]
-        )
-
-        # Calculate the L_e for each processed waveform.
-        for idx_waveform in range(E_p.shape[0]):
-            e_p = E_p[idx_waveform, :, :]
-            l_e = e_p - E_r
-            l_e[l_e < 0] = 0
-            l_e = l_e.sum(dim=1)
-            L_e[idx_waveform, :] = l_e
-
-            return L_e
+        return L_e
 
     def calculate_L(self,
                     R: torch.Tensor,
@@ -408,18 +387,23 @@ class DHASP:
         return -R.mean(dim=1) + alpha * L_e.sum(dim=1)
 
     def calculate_loss(self,
-                       waveforms: torch.Tensor,
-                       waveform_target: torch.Tensor,
+                       waveforms_noisy: torch.Tensor,
+                       waveforms_target: torch.Tensor,
                        alpha: float):
         """
         waveforms: tensor of size (n_waveforms, n_samples)
         waveforms_target: tensor of size (1, n_samples)
         """
 
+        # Make sure that the dimensions match
+        if waveforms_noisy.shape[0] != waveforms_target.shape[0]:
+            return ValueError('The number of target waveforms is not the '
+                              'same as the number of noisy waveforms.')
+
         # Put all waveforms in one tensor.
         all_waveforms = torch.vstack([
-            waveform_target,
-            waveforms
+            waveforms_target,
+            waveforms_noisy
         ])
 
         # Get the outputs of the control and analysis filters
@@ -443,11 +427,11 @@ class DHASP:
                              from_value_type='smoothed_output_envelope')
 
         # Separate the target from the rest.
-        E_r = E[0, :, :].squeeze(0)
-        E_p = E[1:, :, :]
+        E_r = E[:waveforms_target.shape[0], :, :].squeeze(0)
+        E_p = E[waveforms_target.shape[0]:, :, :]
 
-        C_r = C[0, :, :].squeeze(0)
-        C_p = C[1:, :, :]
+        C_r = C[:waveforms_target.shape[0], :, :].squeeze(0)
+        C_p = C[waveforms_target.shape[0]:, :, :]
 
         # Calculate cepstral correlations.
         R = self.calculate_R(C_r, C_p)

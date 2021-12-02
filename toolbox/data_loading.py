@@ -464,8 +464,11 @@ def get_waveforms_synthetic_speech(parameters,
 
     # Set up a filter.
     mask = np.ones(len(df_synthetic_speech), dtype=bool)
-    for parameter_name, parameter_value in parameters.items():
-        mask = mask & (df_synthetic_speech[parameter_name] == parameter_value)
+    for parameter_name, parameter_values in parameters.items():
+        if not isinstance(parameter_values, list):
+            parameter_values = [parameter_values]
+
+        mask = mask & df_synthetic_speech[parameter_name].isin(parameter_values)
 
     # Get a dataframe containing data from segment.
     df_segment = (
@@ -507,6 +510,13 @@ def get_waveforms_synthetic_speech(parameters,
             resample = ta.transforms.Resample(fs, fs_output)
             waveform = resample(waveform)
 
-        audio[variant] = waveform
+        if variant not in audio.keys():
+            audio[variant] = waveform
+        else:
+            audio[variant] = torch.cat([
+                audio[variant],
+                waveform
+            ])
+
 
     return audio, fs_output
