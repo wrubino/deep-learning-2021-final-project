@@ -5,13 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/toolbox/tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/main.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_dsp_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_dsp_functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/toolbox/dhasp.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/dhasp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/toolbox/imports.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/imports.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox/initialization.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/initialization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities.md" beforeDir="false" afterPath="$PROJECT_DIR$/utilities.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +66,7 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -262,6 +262,7 @@
     <MESSAGE value="EQ explained EVEN better, with responses shown." />
     <MESSAGE value="Compressor explained" />
     <MESSAGE value="Envelope and compressor demonstrated" />
-    <option name="LAST_COMMIT_MESSAGE" value="Envelope and compressor demonstrated" />
+    <MESSAGE value="Test module implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test module implemented" />
   </component>
 </project>

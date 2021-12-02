@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import pysepm
 import requests
+import seaborn as sns
 import soundfile as sf
 import sounddevice as sd
 import warnings

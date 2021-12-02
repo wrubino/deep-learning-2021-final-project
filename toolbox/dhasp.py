@@ -1,7 +1,9 @@
-from toolbox.initialization import *
+import toolbox as t
+from toolbox.imports import *
 from toolbox.dsp import db2mag, mag2db, mel2hz, hz2mel, erb, envelope
 from scipy.signal import freqz
 from scipy.interpolate import interp1d
+
 
 
 class DHASP:

@@ -1,9 +1,14 @@
-from toolbox.initialization import *
-
+import toolbox as t
+import toolbox.paths
+from toolbox.imports import *
+paths = toolbox.paths.ProjectPaths()
 
 class Tests:
 
     def test_all(self):
+        """
+        Performs all tests in correct order.
+        """
         self.test_dhasp_filters()
         self.test_apply_filter()
         self.test_envelope()
@@ -179,7 +184,12 @@ class Tests:
             np.arange(output_envelope_smoothed.shape[-1]) / fs_model * stride
 
         # Create figure and axes for the plots.
-        figure, axess = plt.subplots(2, 1, figsize=(12, 8))
+        figure, axess = plt.subplots(2, 1,
+                                     figsize=(12, 8),
+                                     sharex='all')
+
+        # Create a palette of colors for the plot
+        line_colors = sns.color_palette(n_colors=3)
 
         for idx_waveform, (waveform_name, axes) \
                 in enumerate(zip(waveform_names, axess.flatten())):
@@ -193,20 +203,21 @@ class Tests:
                 time_smoothed,
                 output_envelope_smoothed[idx_waveform, idx_filter, :],
                 label='Left axis: Smoothed envelope [dB]',
+                color=line_colors[0]
             )
 
             curves += axes_right.plot(
                 time_smoothed,
                 C[idx_waveform, j - 2, :],
                 label=f'Right axis: Cepstral sequence for j = {j - 2}',
-                color='red'
+                color=line_colors[1]
             )
 
             curves += axes_right.plot(
                 time_smoothed,
                 C[idx_waveform, j - 2 + 1, :],
                 label=f'Right axis: Cepstral sequence for j = {j + 1}',
-                color='green'
+                color=line_colors[2]
             )
 
             # # Show grid
@@ -226,7 +237,11 @@ class Tests:
                 f'Filter number: {idx_filter + 1}, '
                 f'$f_c$={dhasp.f_a[idx_filter].numpy()[0]:,.0f} Hz'
             )
-            axes.set_xlabel('Time [s]')
+
+            axes.set_ylabel('Envelope magnitude [dBFS]')
+            axes_right.set_ylabel('Cepstral seq. magnitude')
+        
+        axess[-1].set_xlabel('Time [s]')
 
         t.plotting.apply_standard_formatting(figure, include_grid=False)
         figure.tight_layout(rect=[0, 0, 1, 1])
@@ -282,7 +297,12 @@ class Tests:
         curves = list()
 
         # Plot filter output and its envelope.
-        figure, axess = plt.subplots(2, 1, figsize=(12, 8))
+        figure, axess = plt.subplots(2, 1,
+                                     figsize=(12, 8),
+                                     sharex='all')
+
+        # Create a palette of colors for the plot
+        line_colors = sns.color_palette(n_colors=3)
 
         for idx_waveform, (waveform_name, axes) \
                 in enumerate(zip(waveform_names, axess.flatten())):
@@ -292,19 +312,21 @@ class Tests:
             curves += axes.plot(
                 time,
                 outputs_control_filter[idx_waveform, idx_filter, :n_samples],
-                label=f'Left axis: Output of control filter'
+                label=f'Left axis: Output of control filter',
+                color=line_colors[0]
             )
 
             curves += axes.plot(
                 time,
                 envelopes_control_filter[idx_waveform, idx_filter, :n_samples],
-                label='Left axis: Envelope'
+                label='Left axis: Envelope',
+                color = line_colors[1]
             )
 
             curves += axes_right.plot(
                 time,
                 G[idx_waveform, idx_filter, :n_samples],
-                color='red',
+                color=line_colors[2],
                 label='Right axis: Compression gain [dB]'
             )
 
@@ -321,10 +343,11 @@ class Tests:
             axes.set_title(f'Waveform: {waveform_name}, '
                            f'Filter number: {idx_filter + 1}, '
                            f'$f_c$={dhasp.f_a[idx_filter].numpy()[0]:,.0f} Hz')
-            axes.set_xlabel('Time [s]')
-            axes.set_ylabel('Signal value')
+            
+            axes.set_ylabel('Signal magnitude')
             axes_right.set_ylabel('Compression gain [dB]')
 
+        axess[-1].set_xlabel('Time [s]')
         t.plotting.apply_standard_formatting(figure, include_grid=False)
         figure.tight_layout(rect=[0, 0, 1, 1])
         plt.show()
@@ -438,7 +461,9 @@ class Tests:
         time_axis = np.arange(samples_to_show) / fs_model
 
         # Plot filter output and its envelope.
-        figure, axess = plt.subplots(2, 1, figsize=(12, 8))
+        figure, axess = plt.subplots(2, 1,
+                                     figsize=(12, 8),
+                                     sharex='all')
 
         axess[0].plot(time_axis,
                       waveforms[0, :samples_to_show],
@@ -463,10 +488,10 @@ class Tests:
 
         for axes in axess.flatten():
             axes.legend()
-            axes.set_xlabel('Time [s]')
-            axes.set_ylabel('Signal value')
+            axes.set_ylabel('Signal magnitude')
             axes.grid()
-
+            
+        axess[-1].set_xlabel('Time [s]')
         t.plotting.apply_standard_formatting(figure)
         plt.show()
 
@@ -513,7 +538,12 @@ class Tests:
         time = np.arange(n_samples) / fs_model
 
         # Create figure and axes for the plots.
-        figure, axess = plt.subplots(2, 1, figsize=(12, 8))
+        figure, axess = plt.subplots(2, 1,
+                                     figsize=(12, 8),
+                                     sharex='all')
+
+        # Create a palette of colors for the plot
+        line_colors = sns.color_palette(n_colors=3)
 
         for idx_waveform, (waveform_name, axes) \
                 in enumerate(zip(waveform_names, axess.flatten())):
@@ -527,20 +557,22 @@ class Tests:
             curves += axes.plot(
                 time,
                 waveforms[idx_waveform, :n_samples],
-                label=f'Original waveform'
+                label=f'Left axis: Original waveform',
+                color=line_colors[0]
             )
 
             curves += axes.plot(
                 time,
                 output_auditory_model[idx_waveform, idx_filter, :n_samples],
-                label=f'Output of the auditory model'
+                label=f'Left axis: Output of the auditory model',
+                color=line_colors[1]
             )
 
             curves += axes_right.plot(
                 time,
                 envelope_auditory_model[idx_waveform, idx_filter, :n_samples],
-                label='Envelope of the output [dB]',
-                color='red'
+                label='Right axis: Envelope of the output [dB]',
+                color = line_colors[2]
             )
             axes.grid()
             if idx_waveform == 1:
@@ -556,8 +588,10 @@ class Tests:
                 f'Waveform: {waveform_name}, '
                 f'Filter number: {idx_filter + 1}, '
                 f'$f_c$={dhasp.f_a[idx_filter].numpy()[0]:,.0f} Hz')
-            axes.set_xlabel('Time [s]')
+            axes.set_ylabel('Signal magnitude')
+            axes_right.set_ylabel('Amplitude envelope [dBFS]')
 
+        axess[-1].set_xlabel('Time [s]')
         t.plotting.apply_standard_formatting(figure, include_grid=False)
         figure.tight_layout(rect=[0, 0, 1, 1])
         plt.show()
@@ -609,13 +643,15 @@ class Tests:
             envelope_smoothed.shape[-1]) / fs_model * stride
 
         # Create figure and axes for the plots.
-        figure, axess = plt.subplots(2, 1, figsize=(12, 8))
+        figure, axess = plt.subplots(2, 1,
+                                     figsize=(12, 8),
+                                     sharex='all')
+
+        # Create a palette of colors for the plot
+        line_colors = sns.color_palette(n_colors=3)
 
         for idx_waveform, (waveform_name, axes) \
                 in enumerate(zip(waveform_names, axess.flatten())):
-
-            # Create another y axis on the right.
-            axes_right = axes.twinx()
 
             # Initialize a list of curve handles.
             curves = list()
@@ -623,13 +659,14 @@ class Tests:
             curves += axes.plot(
                 time_original,
                 envelope_model[idx_waveform, idx_filter, :],
-                label=f'Original envelope of the output of the model [dB]'
+                label=f'Original envelope of the output of the model [dBFS]',
+                color=line_colors[0]
             )
             curves += axes.plot(
                 time_smoothed,
                 envelope_smoothed[idx_waveform, idx_filter, :],
                 label='Smoothed envelope [dB]',
-                color='red'
+                color=line_colors[1]
             )
 
             axes.grid()
@@ -649,7 +686,9 @@ class Tests:
             )
 
             axes.set_xlabel('Time [s]')
+            axes.set_ylabel('Signal magnitude [dBFS]')
 
+        axess[-1].set_xlabel('Time [s]')
         t.plotting.apply_standard_formatting(figure, include_grid=False)
         figure.tight_layout(rect=[0, 0, 1, 1])
         plt.show()
