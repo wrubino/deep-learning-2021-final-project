@@ -10,4 +10,5 @@ import toolbox.initialization
 import toolbox.paths
 import toolbox.plotting
 import toolbox.sound
+import toolbox.tests
 import toolbox.type_conversion

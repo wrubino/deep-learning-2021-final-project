@@ -118,14 +118,17 @@ class DHASP:
         if filter_variant == 'analysis':
             f = self.f_a
             b = self.b_NH_a
+            total_gain = 1
 
         elif filter_variant == 'control':
             f = self.f_c
             b = self.b_c
+            total_gain = 1
 
         elif filter_variant == 'eq':
             f = self.f_eq
             b = self.b_eq
+            total_gain = db2mag(2.5)
 
         else:
             raise ValueError(f'Invalid filter variant: "{filter_variant}".'
@@ -152,7 +155,7 @@ class DHASP:
             axis=0
         )
 
-        h = h / peak_gain.reshape(-1, 1)
+        h = total_gain * h / peak_gain.reshape(-1, 1)
 
         return h
 

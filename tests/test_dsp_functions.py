@@ -12,10 +12,10 @@ import torch.nn as nn
 from toolbox.type_conversion import ensure_torch, np2torch
 
 
-# %%
 def test_fun(fn, x):
     inputs = {'np': x,
               'torch': np2torch(x)}
+    # %%
 
     out = dict()
     for var_type, var in inputs.items():
