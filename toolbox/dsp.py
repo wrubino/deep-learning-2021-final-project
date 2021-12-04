@@ -1,5 +1,7 @@
 import numpy as np
 import torch
+import torch.nn as nn
+import torch.nn.functional as nnf
 import torchaudio as ta
 import torchaudio.functional as taf
 
@@ -155,3 +157,51 @@ def envelope(x: Union[np.ndarray, torch.Tensor],
         amplitude_envelope = np.abs(hilbert(x, axis=axis))
 
     return amplitude_envelope
+
+
+def filter_signal(waveforms: torch.Tensor,
+                  h: torch.Tensor,
+                  gain: torch.Tensor = None,
+                  joint_response=False):
+    """
+    waveforms: tensor size (n_observations, n_samples)
+    h: tensor size (n_channels, n_fir_coeff)
+    gain: tensor size: (n_filter_channels)
+    """
+
+    # Apply gain.
+    if gain is not None:
+        # Make gain a column vector
+        gain = gain.reshape(-1, 1)
+
+        # Check dimensions.
+        if gain.shape[0] != h.shape[0]:
+            raise ValueError('The number of channels of the gain does not '
+                             'match the number of channels in the filter')
+
+        # Apply gain to each channel.
+        h = gain * h
+
+
+    # If chosen, sum all the filters
+    if joint_response:
+        h = h.sum(dim=0).reshape(1, -1)
+
+    # Calculate response.
+    response = nnf.conv1d(
+        waveforms.reshape(
+            waveforms.shape[0],
+            1,
+            waveforms.shape[1]
+        ),
+        h.reshape(h.shape[0], 1, h.shape[1]),
+        padding=h.shape[-1] // 2
+    )
+
+    # If joint_response, remove the superficial channel dimension.
+    if joint_response:
+        response = response.squeeze(1)
+
+    return response
+
+

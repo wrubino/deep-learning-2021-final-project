@@ -32,7 +32,7 @@ waveform_names = ['0 dB', '+20 dB']
 dhasp = t.dhasp.DHASP(fs_model)
 
 # %% Get the output of the auditory model
-output_model, envelope_model = dhasp.calculate_output(waveforms)
+output_model, envelope_model = dhasp.calculate_output_aud_model(waveforms)
 
 # %% Smooth the output envelope
 envelope_smoothed, stride = dhasp.smooth_output_envelope(envelope_model)

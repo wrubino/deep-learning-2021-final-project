@@ -5,11 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/tests/test_filter_signal.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_from_waveform_to_eq_loss.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/main.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/data_loading.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/data_loading.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_cepstral_correlation_and_total_loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_cepstral_correlation_and_total_loss.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_cepstral_sequence.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_cepstral_sequence.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_compression.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_compression.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_output_auditory_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_output_auditory_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_smoothing_output_envelope.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_smoothing_output_envelope.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/toolbox/dhasp.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/dhasp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox/dsp.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/dsp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox/imports.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/imports.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/toolbox/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox/type_conversion.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/type_conversion.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +28,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Jupyter Notebook" />
         <option value="Python Script" />
+        <option value="Jupyter Notebook" />
       </list>
     </option>
   </component>
@@ -64,14 +73,14 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.notebooks.jupyter.connections.configuration.JupyterServerConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="G:\My Drive\DTU\Kurser\Deep_Learning_02456\final_project\tests" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test_2">
+  <component name="RunManager" selected="Python.test_filter_signal">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="final_project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -98,25 +107,6 @@
       <module name="final_project" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/test_2.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="test_EQ" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="final_project" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
@@ -126,7 +116,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/test_EQ.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/test_2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -179,17 +169,42 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test_sandbox" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="test_filter_signal" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="final_project" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/test_sandbox.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/test_filter_signal.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test_from_waveform_to_eq_loss" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="final_project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="G:\My Drive\DTU\Kurser\Deep_Learning_02456\final_project\tests\test_from_waveform_to_eq_loss.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -200,11 +215,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test_filter_signal" />
         <item itemvalue="Python.test_2" />
-        <item itemvalue="Python.test_sandbox" />
+        <item itemvalue="Python.test_from_waveform_to_eq_loss" />
         <item itemvalue="Python.test_apply_filter" />
         <item itemvalue="Python.test_dhasp_filters" />
-        <item itemvalue="Python.test_EQ" />
       </list>
     </recent_temporary>
   </component>
@@ -256,6 +271,7 @@
     <MESSAGE value="Envelope and compressor demonstrated" />
     <MESSAGE value="Test module implemented" />
     <MESSAGE value="Cepstral sequence explained" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cepstral sequence explained" />
+    <MESSAGE value="Correlation corrected so for every sample there must be a separate target" />
+    <option name="LAST_COMMIT_MESSAGE" value="Correlation corrected so for every sample there must be a separate target" />
   </component>
 </project>

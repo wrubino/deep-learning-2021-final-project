@@ -1,6 +1,9 @@
+import torch
+
 import toolbox as t
 from toolbox.imports import *
-from toolbox.dsp import db2mag, mag2db, mel2hz, hz2mel, erb, envelope
+from toolbox.dsp import db2mag, mag2db, mel2hz, hz2mel, erb, envelope, \
+    filter_signal
 from scipy.signal import freqz
 from scipy.interpolate import interp1d
 
@@ -11,7 +14,7 @@ class DHASP:
     "resources/literature/DIFFERENTIABLE HEARING AID SPEECH PROCESSING.pdf"
     """
 
-    def __init__(self, fs, n_taps=500):
+    def __init__(self, fs, n_taps=501):
 
         # Signal level corresponding to 60 dB SPL
         self.db_ref_60_db = -18
@@ -177,24 +180,58 @@ class DHASP:
 
     def apply_filter(self,
                      filter_variant,
-                     waveforms: torch.Tensor):
+                     waveforms: torch.Tensor,
+                     gain: torch.Tensor = None,
+                     joint_response=False):
+        """
+        waveforms: tensor size: (n_observations, n)
+
+        """
         # Get the filter coefficients.
         h = (self
              .__get_filter_coefficents(filter_variant)
              .to(torch.float32))
 
-        # Compute the filter responses.
-        return tnnf.conv1d(
-            waveforms.reshape(
-                waveforms.shape[0],
-                1,
-                waveforms.shape[1]
-            ),
-            h.reshape(h.shape[0], 1, h.shape[1]),
-            padding=h.shape[-1] // 2
-        )
+        # Apply gain.
+        if (gain is None) or (gain.ndim == 1):
+            return filter_signal(waveforms, h, gain, joint_response)
 
-    def calculate_G(self, outputs_control_filter):
+        # Check dimensions.
+        if gain.shape[0] != waveforms.shape[0]:
+            raise ValueError(
+                'The number of observations (dim 0) must be the same '
+                'for gain and waveforms.'
+            )
+
+        # Ensure correct data types.
+        gain = gain.to(torch.float32)
+        h = h.to(torch.float32)
+
+        # Preallocate the response tensor
+        if joint_response:
+            response = torch.empty(
+                waveforms.shape[0],
+                waveforms.shape[1] + (1 - h.shape[1] % 2)
+            )
+        else:
+            response = torch.empty(
+                waveforms.shape[0],
+                h.shape[0],
+                waveforms.shape[1] + (1 - h.shape[1] % 2)
+            )
+
+        # Calculate the response for all observations.
+        for idx_obs in range(waveforms.shape[0]):
+            response[idx_obs, :] = filter_signal(
+                waveforms[idx_obs, :].reshape(1, -1),
+                h,
+                gain[idx_obs, :],
+                joint_response
+            )
+
+        return response
+
+    def calculate_G_comp(self, outputs_control_filter):
         # Calculate envelopes of the outputs of the control filter.
         E_c = self.__to_dbspl(
             envelope(outputs_control_filter).to(torch.float64)
@@ -214,23 +251,23 @@ class DHASP:
         )
 
         # Get the gain in dB
-        G = (-self.attn_o
+        G_comp = (-self.attn_o
              - (1 - 1 / self.CR) * (E_hat_c - self.theta_low))
 
-        return (G)
+        return (G_comp)
 
-    def calculate_output(self,
-                         waveforms: torch.Tensor):
+    def calculate_output_aud_model(self,
+                                   waveforms: torch.Tensor):
 
         # Get the outputs of the control and analysis filters
         outputs_control_filter = self.apply_filter('control', waveforms)
         outputs_analysis_filter = self.apply_filter('analysis', waveforms)
 
         # Calculate the dynamic range compression gain.
-        G = self.calculate_G(outputs_control_filter)
+        G_comp = self.calculate_G_comp(outputs_control_filter)
 
         # Calculate the output of the auditory model in each frequency band.
-        output = outputs_analysis_filter * db2mag(G)
+        output = outputs_analysis_filter * db2mag(G_comp)
 
         # Calculate the envelopes of the output in dB in each frequency band.
         output_envelope = mag2db(envelope(output))
@@ -268,7 +305,7 @@ class DHASP:
         for idx_waveform in range(output_envelope.shape[0]):
             envelope = output_envelope[idx_waveform, :, :]
 
-            envelope_smoothed_temp = tnnf.conv1d(
+            envelope_smoothed_temp = nnf.conv1d(
                 envelope.reshape(envelope.shape[0],
                                  1,
                                  envelope.shape[1]),
@@ -309,7 +346,7 @@ class DHASP:
 
         elif from_value_type == 'waveforms':
             waveforms = from_value
-            _, output_envelope = self.calculate_output(waveforms)
+            _, output_envelope = self.calculate_output_aud_model(waveforms)
             output_envelope_smoothed, _ = \
                 self.smooth_output_envelope(output_envelope)
 
@@ -359,7 +396,8 @@ class DHASP:
 
     def calculate_L_e(self,
                       E_r: torch.Tensor,
-                      E_p: torch.Tensor):
+                      E_p: torch.Tensor,
+                      rubino=False):
         """
         Calculate correlation of cepstral sequences
         E_r: Target smoothed output envelope:  Tensor of size (n_waveforms, i,  m)
@@ -367,29 +405,41 @@ class DHASP:
              Tensor of size (n_waveforms, i, m)
         Output: Tensor of size (n_waveforms, i)
         """
-        L_e = E_p - E_r
-        L_e[L_e < 0] = 0
-        L_e = L_e.sum(dim=2)
+
+        if rubino:
+            L_e = torch.abs(
+                mag2db(db2mag(E_r).sum(dim=2).sum(dim=1))
+                - mag2db(db2mag(E_p).sum(dim=2).sum(dim=1))
+            )
+        else:
+            L_e = E_p - E_r
+            L_e[L_e < 0] = 0
+            L_e = L_e.sum(dim=2)
 
         return L_e
 
     def calculate_L(self,
                     R: torch.Tensor,
                     L_e: torch.Tensor,
-                    alpha=1e-5):
+                    alpha=1e-5,
+                    rubino=False):
         """
         Calculate total loss.
         R: Correlation, tensor, size: (n_waveforms, j)
         L_e_: Energy loss, tensor, size (n_waveforms, i)
         alpha: energy loss weight
         """
+        if rubino:
+            L = -R.mean(dim=1) + alpha * L_e
+        else:
+            L = -R.mean(dim=1) + alpha * L_e.sum(dim=1)
 
-        return -R.mean(dim=1) + alpha * L_e.sum(dim=1)
+        return L
 
-    def calculate_loss(self,
-                       waveforms_noisy: torch.Tensor,
-                       waveforms_target: torch.Tensor,
-                       alpha: float):
+    def calculate_loss_from_waveforms(self,
+                                      waveforms_noisy: torch.Tensor,
+                                      waveforms_target: torch.Tensor,
+                                      alpha: float):
         """
         waveforms: tensor of size (n_waveforms, n_samples)
         waveforms_target: tensor of size (1, n_samples)
@@ -411,7 +461,7 @@ class DHASP:
         outputs_analysis_filter = self.apply_filter('analysis', all_waveforms)
 
         # Calculate the dynamic range compression gain.
-        G = self.calculate_G(outputs_control_filter)
+        G = self.calculate_G_comp(outputs_control_filter)
 
         # Calculate the output of the auditory model in each frequency band.
         output = outputs_analysis_filter * db2mag(G)

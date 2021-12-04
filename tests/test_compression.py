@@ -38,7 +38,7 @@ envelopes_control_filter = t.dsp.envelope(outputs_control_filter)
 
 
 # %% Get dynamic range compression gain
-G = dhasp.calculate_G(outputs_control_filter)
+G = dhasp.calculate_G_comp(outputs_control_filter)
 
 
 # %% Visualize

@@ -55,7 +55,10 @@ L = dhasp.calculate_L(R, L_e, alpha)
 
 start_time = time.time()
 
-L_2, R_2, L_e_2 = dhasp.calculate_loss(waveforms, waveform_target, alpha)
+L_2, R_2, L_e_2 = dhasp.calculate_loss_from_waveforms(
+    waveforms,
+    waveform_target,
+    alpha)
 
 stop_time = time.time()
 print(f'Execution time: {stop_time - start_time:.2f} s.')

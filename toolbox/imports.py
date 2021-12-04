@@ -11,7 +11,8 @@ import sounddevice as sd
 import warnings
 import time
 import torch
-import torch.nn.functional as tnnf
+import torch.nn as nn
+import torch.nn.functional as nnf
 import torchaudio as ta
 import torchaudio.functional as taf
 
@@ -25,4 +26,7 @@ from IPython import get_ipython
 from operator import itemgetter
 from pathlib import Path
 from tqdm import tqdm
+import torch.optim as optim
+from torch.utils.data import Dataset
+from torch.utils.data import DataLoader
 from typing import Union

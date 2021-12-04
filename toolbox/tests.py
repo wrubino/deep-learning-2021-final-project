@@ -59,7 +59,9 @@ class Tests:
                       f'from the filterbank: "{filterbank}" on white noise'
             )
 
-    def test_cepstral_correlation_and_total_loss(self, alpha=1e-5):
+    def test_cepstral_correlation_and_total_loss(self,
+                                                 alpha_original=1e-5,
+                                                 alpha_rubino=0.02):
         # %% Load Audio
 
         # Load audio samples representing the same speech segment in different
@@ -78,7 +80,7 @@ class Tests:
         waveforms = torch.vstack(list(audio_samples.values()))
 
         # Specify the target (clean) waveforms
-        waveform_target = audio_samples['clean'].expand(*waveforms.shape)        # Get the waveform names for plotting.
+        waveforms_target = audio_samples['clean'].expand(*waveforms.shape)        # Get the waveform names for plotting.
 
         # Get the waveform names
         waveform_names = list(audio_samples.keys())
@@ -86,11 +88,11 @@ class Tests:
         # %% Initialize the dhasp model.
         dhasp = t.dhasp.DHASP(fs_model)
 
-        # % Get C and E for target and the other waveforms
+        # %% Get C and E for target and the other waveforms
 
         # Get the cepstral sequences and the smoothed envelope of the output of the
         # auditory model
-        C_r, E_r = dhasp.calculate_C(waveform_target,
+        C_r, E_r = dhasp.calculate_C(waveforms_target,
                                      from_value_type='waveforms')
         C_r = C_r.squeeze(0)
         E_r = E_r.squeeze(0)
@@ -101,27 +103,32 @@ class Tests:
         R = dhasp.calculate_R(C_r, C_p)
 
         # %% Calculate the energy loss.
-        L_e = dhasp.calculate_L_e(E_r, E_p)
+        L_e_original = dhasp.calculate_L_e(E_r, E_p, rubino=False)
 
-        # %% Calculate the total loss
-        L = dhasp.calculate_L(R, L_e, alpha)
+        # %% Calculate the Rubino energy loss.
+        L_e_rubino = dhasp.calculate_L_e(E_r, E_p, rubino=True)
 
-        # %% Calculate everything in one hook.
+        # %% Calculate the total loss using the original energy control loss
+        L_total_original = dhasp.calculate_L(R,
+                                             L_e_original,
+                                             alpha_original,
+                                             rubino=False)
 
-        start_time = time.time()
+        # %% Calculate the total loss using the Rubino energy control loss
+        L_total_rubino = dhasp.calculate_L(R,
+                                           L_e_rubino,
+                                           alpha_rubino,
+                                           rubino=True)
 
-        L_2, R_2, L_e_2 = dhasp.calculate_loss(waveforms, waveform_target,
-                                               alpha)
-
-        stop_time = time.time()
-        print(f'Execution time: {stop_time - start_time:.2f} s.')
 
         # %% Show results
         data = {
             'Variant': waveform_names,
             'R': R.mean(dim=1).numpy(),
-            'L_e': L_e.sum(dim=1).numpy(),
-            'L': L.numpy()
+            'L_e_original': L_e_original.sum(dim=1).numpy(),
+            'L_e_rubino': L_e_rubino.numpy(),
+            'L_original': L_total_original.numpy(),
+            'L_rubino': L_total_rubino.numpy()
         }
 
         df_results = pd.DataFrame(data)
@@ -159,7 +166,7 @@ class Tests:
         dhasp = t.dhasp.DHASP(fs_model)
 
         # %% Get the output of the auditory model.
-        output, output_envelope = dhasp.calculate_output(waveforms)
+        output, output_envelope = dhasp.calculate_output_aud_model(waveforms)
 
         # %% Get the smoothed envelope
 
@@ -282,7 +289,7 @@ class Tests:
         envelopes_control_filter = t.dsp.envelope(outputs_control_filter)
 
         # %% Get dynamic range compression gain
-        G = dhasp.calculate_G(outputs_control_filter)
+        G = dhasp.calculate_G_comp(outputs_control_filter)
 
         # %% Visualize
         # The index of the filter and number of samples to show
@@ -525,7 +532,7 @@ class Tests:
 
         # %% Get the output of the auditory model
         output_auditory_model, envelope_auditory_model = \
-            dhasp.calculate_output(waveforms)
+            dhasp.calculate_output_aud_model(waveforms)
 
         # %% Visualize
 
@@ -626,7 +633,7 @@ class Tests:
         dhasp = t.dhasp.DHASP(fs_model)
 
         # %% Get the output of the auditory model
-        output_model, envelope_model = dhasp.calculate_output(waveforms)
+        output_model, envelope_model = dhasp.calculate_output_aud_model(waveforms)
 
         # %% Smooth the output envelope
         envelope_smoothed, stride = dhasp.smooth_output_envelope(envelope_model)

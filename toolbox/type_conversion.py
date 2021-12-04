@@ -2,7 +2,7 @@ import numpy as np
 from torch import from_numpy, Tensor
 
 
-def np2torch(numpy_array, requires_grad=True):
+def np2torch(numpy_array, requires_grad=False):
     """
     Converts a numpy array to torch tensor that requires grad
     :param numpy_array:
