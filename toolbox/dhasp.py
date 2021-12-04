@@ -190,7 +190,7 @@ class DHASP:
         # Get the filter coefficients.
         h = (self
              .__get_filter_coefficents(filter_variant)
-             .to(torch.float32))
+             .to(torch.float64))
 
         # Apply gain.
         if (gain is None) or (gain.ndim == 1):
@@ -204,8 +204,8 @@ class DHASP:
             )
 
         # Ensure correct data types.
-        gain = gain.to(torch.float32)
-        h = h.to(torch.float32)
+        gain = gain.to(torch.float64)
+        h = h.to(torch.float64)
 
         # Preallocate the response tensor
         if joint_response:
@@ -283,8 +283,8 @@ class DHASP:
         :rtype:
         """
 
-        # Make sure that the data type is "float32".
-        output_envelope = output_envelope.to(torch.float32)
+        # Make sure that the data type is "float64".
+        output_envelope = output_envelope.to(torch.float64)
 
         # Number of samples corresponding to 16 ms.
         n_samples_16_ms = int(16e-3 * self.fs)
@@ -293,7 +293,7 @@ class DHASP:
         stride = n_samples_16_ms // 2
 
         # Get the weights of the Hanning window we will use for smoothing.
-        weights = torch.hann_window(n_samples_16_ms)
+        weights = torch.hann_window(n_samples_16_ms, dtype=torch.float64)
         weights = weights / weights.sum()
 
         # Smooth the envelope.
@@ -338,7 +338,7 @@ class DHASP:
 
         # Compute the basis functions for every combination oi i (rows)
         # and j (columns).
-        bas = torch.cos((j - 1) * np.pi * i / (self.I - 1))
+        bas = torch.cos((j - 1) * np.pi * i / (self.I - 1)).to(torch.float64)
 
         # Get the smoothed envelope of the output of the auditory model.
         if from_value_type == 'smoothed_output_envelope':

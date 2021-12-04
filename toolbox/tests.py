@@ -1,3 +1,5 @@
+import torch
+
 import toolbox as t
 import toolbox.paths
 from toolbox.imports import *
@@ -27,6 +29,7 @@ class Tests:
         # %% Create a test signal (white noise)
         time = torch.arange(0, 2, 1 / fs_model)
         white_noise = 2 * torch.rand_like(time).unsqueeze(0) - 0.25
+        white_noise = white_noise.to(torch.float64)
         white_noise_20_dB_louder = 10 * white_noise
         white_noise_filtered = dhasp.apply_filter('analysis', torch.vstack(
             [white_noise, white_noise_20_dB_louder]))

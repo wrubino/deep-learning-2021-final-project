@@ -494,7 +494,7 @@ def get_waveforms_synthetic_speech(parameters,
             # Transform the waveform int
             waveform = (
                 np2torch(waveform)
-                    .to(torch.float32)
+                    .to(torch.float64)
                     .unsqueeze(0)
             )
         elif path.suffix == '.wav':
@@ -509,6 +509,8 @@ def get_waveforms_synthetic_speech(parameters,
         if fs_output != fs:
             resample = ta.transforms.Resample(fs, fs_output)
             waveform = resample(waveform)
+
+        waveform = waveform.to(torch.float64)
 
         if variant not in audio.keys():
             audio[variant] = waveform

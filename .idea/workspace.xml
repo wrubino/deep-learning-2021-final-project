@@ -4,21 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/test_filter_signal.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_from_waveform_to_eq_loss.py" afterDir="false" />
+    <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="before changing to float64">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/main.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_cepstral_correlation_and_total_loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_cepstral_correlation_and_total_loss.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_cepstral_sequence.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_cepstral_sequence.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_compression.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_compression.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_output_auditory_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_output_auditory_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_smoothing_output_envelope.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_smoothing_output_envelope.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_filter_signal.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_filter_signal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox/configuration.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/configuration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox/data_loading.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/data_loading.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/toolbox/dhasp.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/dhasp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/dsp.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/dsp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/imports.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/imports.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/toolbox/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/type_conversion.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/type_conversion.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="Jupyter Notebook" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -272,6 +265,7 @@
     <MESSAGE value="Test module implemented" />
     <MESSAGE value="Cepstral sequence explained" />
     <MESSAGE value="Correlation corrected so for every sample there must be a separate target" />
-    <option name="LAST_COMMIT_MESSAGE" value="Correlation corrected so for every sample there must be a separate target" />
+    <MESSAGE value="before changing to float64" />
+    <option name="LAST_COMMIT_MESSAGE" value="before changing to float64" />
   </component>
 </project>

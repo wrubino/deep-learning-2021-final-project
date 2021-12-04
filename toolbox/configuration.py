@@ -1,5 +1,6 @@
 import warnings
 import pandas as pd
+import torch
 
 from IPython import get_ipython, InteractiveShell
 
@@ -41,6 +42,9 @@ pd.options.display.latex.multirow = False
 # displaying a Pandas dataframe.
 pd.options.display.max_rows = 150
 pd.options.display.max_columns = 200
+
+# %% Torch options
+torch.set_default_dtype(torch.float64)
 
 # %% ## Warnings
 

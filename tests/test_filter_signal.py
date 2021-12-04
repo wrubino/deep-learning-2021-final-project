@@ -27,7 +27,7 @@ dhasp = t.dhasp.DHASP(fs_model)
 g = torch.arange(9).reshape(-1, 1) * torch.ones(9, 8)
 
 a = dhasp.apply_filter('eq',
-    audio_samples['clean'][0, :].to(torch.float32).repeat(9, 1),
+    audio_samples['clean'][0, :].to(torch.float64).repeat(9, 1),
     gain=g,
     joint_response=False
 )
