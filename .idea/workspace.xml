@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="changed to float64. shit works.">
+    <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="Forst review done, references written">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/main.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/toolbox/data_loading.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/data_loading.py" afterDir="false" />
@@ -267,6 +267,7 @@
     <MESSAGE value="Correlation corrected so for every sample there must be a separate target" />
     <MESSAGE value="before changing to float64" />
     <MESSAGE value="changed to float64. shit works." />
-    <option name="LAST_COMMIT_MESSAGE" value="changed to float64. shit works." />
+    <MESSAGE value="Forst review done, references written" />
+    <option name="LAST_COMMIT_MESSAGE" value="Forst review done, references written" />
   </component>
 </project>
