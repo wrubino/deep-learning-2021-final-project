@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="Forst review done, references written">
+    <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="best models pkl">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/main.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/data_loading.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/data_loading.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/paths.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/paths.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documentation/Project Synopsis.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/documentation/deep_learning_final_project_poster.pptx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +66,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\My Drive\DTU\Kurser\Deep_Learning_02456\final_project\tests" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\My Drive\DTU\Kurser\Deep_Learning_02456\final_project" />
       <recent name="G:\My Drive\DTU\Kurser\Deep_Learning_02456\final_project\tests" />
     </key>
   </component>
@@ -268,6 +271,8 @@
     <MESSAGE value="before changing to float64" />
     <MESSAGE value="changed to float64. shit works." />
     <MESSAGE value="Forst review done, references written" />
-    <option name="LAST_COMMIT_MESSAGE" value="Forst review done, references written" />
+    <MESSAGE value="cleaning up, main notebook renamed" />
+    <MESSAGE value="best models pkl" />
+    <option name="LAST_COMMIT_MESSAGE" value="best models pkl" />
   </component>
 </project>
