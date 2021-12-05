@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="before changing to float64">
+    <list default="true" id="2545808a-dbf6-46d8-bc9e-605e5e4368cf" name="Changes" comment="changed to float64. shit works.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/main.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_filter_signal.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_filter_signal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/configuration.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/configuration.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/toolbox/data_loading.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/data_loading.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/dhasp.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/dhasp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox/paths.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox/paths.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,6 +263,7 @@
     <MESSAGE value="Cepstral sequence explained" />
     <MESSAGE value="Correlation corrected so for every sample there must be a separate target" />
     <MESSAGE value="before changing to float64" />
-    <option name="LAST_COMMIT_MESSAGE" value="before changing to float64" />
+    <MESSAGE value="changed to float64. shit works." />
+    <option name="LAST_COMMIT_MESSAGE" value="changed to float64. shit works." />
   </component>
 </project>

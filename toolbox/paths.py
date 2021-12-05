@@ -85,4 +85,22 @@ class ProjectPaths:
                 # Synthetic speech data (pandas dataframe)
                 self.df_synthetic_speech = self.root / 'df_synthetic_speech.pkl'
 
+                # Best model
+                self.model_best = self.root / 'model_best.pkl'
+
+                # Last model
+                self.model_last = self.root / 'model_last.pkl'
+
+                # Network input parameters
+                self.X_input = self.root / 'X_input.pt'
+                self.X_target = self.root / 'X_target.pt'
+                self.C_input = self.root / 'C_input.pt'
+                self.E_input = self.root / 'E_input.pt'
+                self.C_target = self.root / 'C_target.pt'
+                self.E_target = self.root / 'E_target.pt'
+
+
+
+
+
         self.cache = Cache(self)

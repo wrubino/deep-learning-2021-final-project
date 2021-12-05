@@ -10,6 +10,7 @@ from toolbox.paths import ProjectPaths
 from toolbox.type_conversion import np2torch
 
 
+
 def get_sentence_data(sentence_code: str,
                       path_folder: Path):
     """
@@ -522,3 +523,37 @@ def get_waveforms_synthetic_speech(parameters,
 
 
     return audio, fs_output
+
+
+def save_model_inputs(X_input, X_target,
+                      C_input, C_target,
+                      E_input, E_target):
+    """
+    Saves inputs to the neural network.
+    """
+
+    paths = ProjectPaths()
+
+    torch.save(X_input, paths.cache.X_input)
+    torch.save(X_target, paths.cache.X_target)
+    torch.save(C_input, paths.cache.C_input)
+    torch.save(C_target, paths.cache.C_target)
+    torch.save(E_input, paths.cache.E_input)
+    torch.save(E_target, paths.cache.E_target)
+
+
+def load_model_inputs():
+    """
+    Loads inputs to the neural network.
+    """
+
+    paths = ProjectPaths()
+
+    X_input = torch.load(paths.cache.X_input)
+    X_target = torch.load(paths.cache.X_target)
+    C_input = torch.load(paths.cache.C_input)
+    C_target = torch.load(paths.cache.C_target)
+    E_input = torch.load(paths.cache.E_input)
+    E_target = torch.load(paths.cache.E_target)
+
+    return X_input, X_target, C_input, C_target, E_input, E_target
