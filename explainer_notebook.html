@@ -13166,6 +13166,9 @@ $( document ).ready(function(){
 <font size="3">Wojciech Rubino</font>
 <br>
 <font size="3">s001284@student.dtu.dk</font>
+<br>
+<br>
+<font size="3">6 December 2021</font>
 </center>
 <br>
 <br>
@@ -13177,7 +13180,7 @@ $( document ).ready(function(){
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p><h1>Table of Contents<span class="tocSkip"></span></h1>
-<div class="toc"><ul class="toc-item"><li><span><a href="#Introduction" data-toc-modified-id="Introduction-1"><span class="toc-item-num">1  </span>Introduction</a></span><ul class="toc-item"><li><span><a href="#The-official-project-description" data-toc-modified-id="The-official-project-description-1.1"><span class="toc-item-num">1.1  </span>The official project description</a></span></li><li><span><a href="#The-approach" data-toc-modified-id="The-approach-1.2"><span class="toc-item-num">1.2  </span>The approach</a></span><ul class="toc-item"><li><span><a href="#Resources" data-toc-modified-id="Resources-1.2.1"><span class="toc-item-num">1.2.1  </span>Resources</a></span></li><li><span><a href="#The-requisites" data-toc-modified-id="The-requisites-1.2.2"><span class="toc-item-num">1.2.2  </span>The requisites</a></span></li><li><span><a href="#The-strategy" data-toc-modified-id="The-strategy-1.2.3"><span class="toc-item-num">1.2.3  </span>The strategy</a></span></li></ul></li></ul></li><li><span><a href="#How-to-work-with-this-notebook" data-toc-modified-id="How-to-work-with-this-notebook-2"><span class="toc-item-num">2  </span>How to work with this notebook</a></span><ul class="toc-item"><li><span><a href="#The-organization-of-the-project-repository" data-toc-modified-id="The-organization-of-the-project-repository-2.1"><span class="toc-item-num">2.1  </span>The organization of the project repository</a></span><ul class="toc-item"><li><span><a href="#Functions-and-modules" data-toc-modified-id="Functions-and-modules-2.1.1"><span class="toc-item-num">2.1.1  </span>Functions and modules</a></span></li><li><span><a href="#Tests" data-toc-modified-id="Tests-2.1.2"><span class="toc-item-num">2.1.2  </span>Tests</a></span></li><li><span><a href="#Resources" data-toc-modified-id="Resources-2.1.3"><span class="toc-item-num">2.1.3  </span>Resources</a></span></li></ul></li></ul></li><li><span><a href="#Initialization" data-toc-modified-id="Initialization-3"><span class="toc-item-num">3  </span>Initialization</a></span></li><li><span><a href="#Load-information-about-the-audio-data" data-toc-modified-id="Load-information-about-the-audio-data-4"><span class="toc-item-num">4  </span>Load information about the audio data</a></span><ul class="toc-item"><li><span><a href="#TIMIT-dataset" data-toc-modified-id="TIMIT-dataset-4.1"><span class="toc-item-num">4.1  </span>TIMIT dataset</a></span></li><li><span><a href="#Synthetic-speech-dataset" data-toc-modified-id="Synthetic-speech-dataset-4.2"><span class="toc-item-num">4.2  </span>Synthetic speech dataset</a></span></li></ul></li><li><span><a href="#Implementation-of-an-objective-function-based-on-the-DHASP-model" data-toc-modified-id="Implementation-of-an-objective-function-based-on-the-DHASP-model-5"><span class="toc-item-num">5  </span>Implementation of an objective function based on the DHASP model</a></span><ul class="toc-item"><li><span><a href="#The-EQ" data-toc-modified-id="The-EQ-5.1"><span class="toc-item-num">5.1  </span>The EQ</a></span></li><li><span><a href="#The-auditory-model" data-toc-modified-id="The-auditory-model-5.2"><span class="toc-item-num">5.2  </span>The auditory model</a></span><ul class="toc-item"><li><span><a href="#The-filterbanks" data-toc-modified-id="The-filterbanks-5.2.1"><span class="toc-item-num">5.2.1  </span>The filterbanks</a></span><ul class="toc-item"><li><span><a href="#Center-frequencies" data-toc-modified-id="Center-frequencies-5.2.1.1"><span class="toc-item-num">5.2.1.1  </span>Center frequencies</a></span></li><li><span><a href="#Bandwidths" data-toc-modified-id="Bandwidths-5.2.1.2"><span class="toc-item-num">5.2.1.2  </span>Bandwidths</a></span></li></ul></li><li><span><a href="#Dynamic-range-compression" data-toc-modified-id="Dynamic-range-compression-5.2.2"><span class="toc-item-num">5.2.2  </span>Dynamic-range compression</a></span></li><li><span><a href="#The-output-of-the-auditory-model" data-toc-modified-id="The-output-of-the-auditory-model-5.2.3"><span class="toc-item-num">5.2.3  </span>The output of the auditory model</a></span></li></ul></li><li><span><a href="#The-objective-function" data-toc-modified-id="The-objective-function-5.3"><span class="toc-item-num">5.3  </span>The objective function</a></span><ul class="toc-item"><li><span><a href="#Cepstral-correlation-measure" data-toc-modified-id="Cepstral-correlation-measure-5.3.1"><span class="toc-item-num">5.3.1  </span>Cepstral correlation measure</a></span></li><li><span><a href="#Energy-control-function" data-toc-modified-id="Energy-control-function-5.3.2"><span class="toc-item-num">5.3.2  </span>Energy control function</a></span></li><li><span><a href="#The-Rubino-energy-control-function" data-toc-modified-id="The-Rubino-energy-control-function-5.3.3"><span class="toc-item-num">5.3.3  </span>The <em>Rubino</em> energy control function</a></span></li><li><span><a href="#Total-loss" data-toc-modified-id="Total-loss-5.3.4"><span class="toc-item-num">5.3.4  </span>Total loss</a></span></li></ul></li></ul></li><li><span><a href="#How-to-use-the-developed-tools-for-training" data-toc-modified-id="How-to-use-the-developed-tools-for-training-6"><span class="toc-item-num">6  </span>How to use the developed tools for training</a></span><ul class="toc-item"><li><span><a href="#Load-audio" data-toc-modified-id="Load-audio-6.1"><span class="toc-item-num">6.1  </span>Load audio</a></span></li><li><span><a href="#Creating-inputs-and-targets-for-the-model" data-toc-modified-id="Creating-inputs-and-targets-for-the-model-6.2"><span class="toc-item-num">6.2  </span>Creating inputs and targets for the model</a></span></li><li><span><a href="#Creating-datasets-and-data-loaders" data-toc-modified-id="Creating-datasets-and-data-loaders-6.3"><span class="toc-item-num">6.3  </span>Creating datasets and data loaders</a></span></li><li><span><a href="#Create-a-neural-network" data-toc-modified-id="Create-a-neural-network-6.4"><span class="toc-item-num">6.4  </span>Create a neural network</a></span></li><li><span><a href="#The-loss-function" data-toc-modified-id="The-loss-function-6.5"><span class="toc-item-num">6.5  </span>The loss function</a></span></li><li><span><a href="#The-training-function" data-toc-modified-id="The-training-function-6.6"><span class="toc-item-num">6.6  </span>The training function</a></span></li><li><span><a href="#Training-the-network" data-toc-modified-id="Training-the-network-6.7"><span class="toc-item-num">6.7  </span>Training the network</a></span></li><li><span><a href="#Evaluation-of-the-results" data-toc-modified-id="Evaluation-of-the-results-6.8"><span class="toc-item-num">6.8  </span>Evaluation of the results</a></span></li></ul></li><li><span><a href="#Discussion" data-toc-modified-id="Discussion-7"><span class="toc-item-num">7  </span>Discussion</a></span></li><li><span><a href="#References" data-toc-modified-id="References-8"><span class="toc-item-num">8  </span>References</a></span></li></ul></div>
+<div class="toc"><ul class="toc-item"><li><span><a href="#Introduction" data-toc-modified-id="Introduction-1"><span class="toc-item-num">1  </span>Introduction</a></span><ul class="toc-item"><li><span><a href="#The-official-project-description" data-toc-modified-id="The-official-project-description-1.1"><span class="toc-item-num">1.1  </span>The official project description</a></span></li><li><span><a href="#The-approach" data-toc-modified-id="The-approach-1.2"><span class="toc-item-num">1.2  </span>The approach</a></span><ul class="toc-item"><li><span><a href="#Resources" data-toc-modified-id="Resources-1.2.1"><span class="toc-item-num">1.2.1  </span>Resources</a></span></li><li><span><a href="#Requisites" data-toc-modified-id="Requisites-1.2.2"><span class="toc-item-num">1.2.2  </span>Requisites</a></span></li><li><span><a href="#Strategy" data-toc-modified-id="Strategy-1.2.3"><span class="toc-item-num">1.2.3  </span>Strategy</a></span></li></ul></li></ul></li><li><span><a href="#How-to-work-with-this-notebook" data-toc-modified-id="How-to-work-with-this-notebook-2"><span class="toc-item-num">2  </span>How to work with this notebook</a></span><ul class="toc-item"><li><span><a href="#The-organization-of-the-project-repository" data-toc-modified-id="The-organization-of-the-project-repository-2.1"><span class="toc-item-num">2.1  </span>The organization of the project repository</a></span><ul class="toc-item"><li><span><a href="#Functions-and-modules" data-toc-modified-id="Functions-and-modules-2.1.1"><span class="toc-item-num">2.1.1  </span>Functions and modules</a></span></li><li><span><a href="#Tests" data-toc-modified-id="Tests-2.1.2"><span class="toc-item-num">2.1.2  </span>Tests</a></span></li><li><span><a href="#Resources" data-toc-modified-id="Resources-2.1.3"><span class="toc-item-num">2.1.3  </span>Resources</a></span></li></ul></li></ul></li><li><span><a href="#Initialization" data-toc-modified-id="Initialization-3"><span class="toc-item-num">3  </span>Initialization</a></span></li><li><span><a href="#Load-information-about-the-audio-data" data-toc-modified-id="Load-information-about-the-audio-data-4"><span class="toc-item-num">4  </span>Load information about the audio data</a></span><ul class="toc-item"><li><span><a href="#TIMIT-dataset" data-toc-modified-id="TIMIT-dataset-4.1"><span class="toc-item-num">4.1  </span>TIMIT dataset</a></span></li><li><span><a href="#Synthetic-speech-dataset" data-toc-modified-id="Synthetic-speech-dataset-4.2"><span class="toc-item-num">4.2  </span>Synthetic speech dataset</a></span></li></ul></li><li><span><a href="#Implementation-of-an-objective-function-based-on-the-DHASP-model" data-toc-modified-id="Implementation-of-an-objective-function-based-on-the-DHASP-model-5"><span class="toc-item-num">5  </span>Implementation of an objective function based on the DHASP model</a></span><ul class="toc-item"><li><span><a href="#The-EQ" data-toc-modified-id="The-EQ-5.1"><span class="toc-item-num">5.1  </span>The EQ</a></span></li><li><span><a href="#The-auditory-model" data-toc-modified-id="The-auditory-model-5.2"><span class="toc-item-num">5.2  </span>The auditory model</a></span><ul class="toc-item"><li><span><a href="#The-filterbanks" data-toc-modified-id="The-filterbanks-5.2.1"><span class="toc-item-num">5.2.1  </span>The filterbanks</a></span><ul class="toc-item"><li><span><a href="#Center-frequencies" data-toc-modified-id="Center-frequencies-5.2.1.1"><span class="toc-item-num">5.2.1.1  </span>Center frequencies</a></span></li><li><span><a href="#Bandwidths" data-toc-modified-id="Bandwidths-5.2.1.2"><span class="toc-item-num">5.2.1.2  </span>Bandwidths</a></span></li></ul></li><li><span><a href="#Dynamic-range-compression" data-toc-modified-id="Dynamic-range-compression-5.2.2"><span class="toc-item-num">5.2.2  </span>Dynamic-range compression</a></span></li><li><span><a href="#The-output-of-the-auditory-model" data-toc-modified-id="The-output-of-the-auditory-model-5.2.3"><span class="toc-item-num">5.2.3  </span>The output of the auditory model</a></span></li></ul></li><li><span><a href="#The-objective-function" data-toc-modified-id="The-objective-function-5.3"><span class="toc-item-num">5.3  </span>The objective function</a></span><ul class="toc-item"><li><span><a href="#Cepstral-correlation-measure" data-toc-modified-id="Cepstral-correlation-measure-5.3.1"><span class="toc-item-num">5.3.1  </span>Cepstral correlation measure</a></span></li><li><span><a href="#Energy-control-function" data-toc-modified-id="Energy-control-function-5.3.2"><span class="toc-item-num">5.3.2  </span>Energy control function</a></span></li><li><span><a href="#The-Rubino-energy-control-function" data-toc-modified-id="The-Rubino-energy-control-function-5.3.3"><span class="toc-item-num">5.3.3  </span>The <em>Rubino</em> energy control function</a></span></li><li><span><a href="#Total-loss" data-toc-modified-id="Total-loss-5.3.4"><span class="toc-item-num">5.3.4  </span>Total loss</a></span></li></ul></li></ul></li><li><span><a href="#How-to-use-the-developed-tools-for-training" data-toc-modified-id="How-to-use-the-developed-tools-for-training-6"><span class="toc-item-num">6  </span>How to use the developed tools for training</a></span><ul class="toc-item"><li><span><a href="#Load-audio" data-toc-modified-id="Load-audio-6.1"><span class="toc-item-num">6.1  </span>Load audio</a></span></li><li><span><a href="#Creating-inputs-and-targets-for-the-model" data-toc-modified-id="Creating-inputs-and-targets-for-the-model-6.2"><span class="toc-item-num">6.2  </span>Creating inputs and targets for the model</a></span></li><li><span><a href="#Creating-datasets-and-data-loaders" data-toc-modified-id="Creating-datasets-and-data-loaders-6.3"><span class="toc-item-num">6.3  </span>Creating datasets and data loaders</a></span></li><li><span><a href="#Create-a-neural-network" data-toc-modified-id="Create-a-neural-network-6.4"><span class="toc-item-num">6.4  </span>Create a neural network</a></span></li><li><span><a href="#The-loss-function" data-toc-modified-id="The-loss-function-6.5"><span class="toc-item-num">6.5  </span>The loss function</a></span></li><li><span><a href="#The-training-function" data-toc-modified-id="The-training-function-6.6"><span class="toc-item-num">6.6  </span>The training function</a></span></li><li><span><a href="#Training-the-network" data-toc-modified-id="Training-the-network-6.7"><span class="toc-item-num">6.7  </span>Training the network</a></span></li><li><span><a href="#Evaluation-of-the-results" data-toc-modified-id="Evaluation-of-the-results-6.8"><span class="toc-item-num">6.8  </span>Evaluation of the results</a></span></li></ul></li><li><span><a href="#Discussion" data-toc-modified-id="Discussion-7"><span class="toc-item-num">7  </span>Discussion</a></span></li><li><span><a href="#References" data-toc-modified-id="References-8"><span class="toc-item-num">8  </span>References</a></span></li></ul></div>
 </div>
 </div>
 </div>
@@ -13192,10 +13195,10 @@ $( document ).ready(function(){
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Many people struggle to understand speech in challenging acoustic environments, such as a noisy bar. Therefore, enhancing the intelligibility of noisy speech signals is one of the key challenges for any producer of modern communication devices.</p>
-<p>The problem is often tackled by dividing a noisy speech signal into a number of frequency bands and attenuating the ones where the signal-to-noise ratio is insufficient. This approach, while effective in some situations, often leads to poor results, and sometimes even exacerbates the problem, as the repeated activation and disactivation of some of the frequency bands in response to the fluctuations in speech and noise can create a very unnatural and disturbing sounds.</p>
-<p>In this project, we will try a different approach and attempt to train a neural network to produce an equalization curve that, when applied to a noisy speech signal, will improve its intelligibility. This is be done by creating a model of human auditory processing and searching for a frequency-gain curve that, when applied to the noisy signal, produces a signal that at the level of human brain is most similar to that of clear speech.</p>
+<p>The problem is often tackled by dividing a noisy speech signal into a number of frequency bands and attenuating the ones where the signal-to-noise ratio is insufficient. This approach, while effective in some situations, often leads to poor results, and sometimes even exacerbates the problem, as the repeated activation and disactivation of some of the frequency bands in response to the fluctuations in speech and noise can create very unnatural and disturbing sounds.</p>
+<p>In this project, we will try a different approach and attempt to train a neural network to produce an equalization curve that, when applied to a noisy speech signal, will improve its intelligibility. We will do that by creating a model of human auditory processing and searching for a frequency-gain curve that will alter a noisy signal so that it, at the level of the human brain, to a highest possible degree resembles clear speech.</p>
 <p>Our biggest challenge will be to implement a differentiable objective function based on a model of human auditory processing described in a <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9414571">paper</a> by Zehai Tu, Ning Ma and Jon Barker [2]. This task will, aside from basic knowledge of coding and neural networks, require a solid knowledge of digital signal processing and human auditory system and acoustics.</p>
-<p>Once implemented, we will demonstrate the functionality if the differentiable objective function by utilizing it to train a simple neural network that optimizes parameters of a multiband equalizer.</p>
+<p>Once implemented, we will demonstrate the functionality of the differentiable objective function by utilizing it to train a simple neural network that optimizes parameters of a multiband equalizer.</p>
 
 </div>
 </div>
@@ -13256,7 +13259,7 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="The-requisites">The requisites<a class="anchor-link" href="#The-requisites">¶</a></h3>
+<h3 id="Requisites">Requisites<a class="anchor-link" href="#Requisites">¶</a></h3>
 </div>
 </div>
 </div>
@@ -13277,15 +13280,15 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="The-strategy">The strategy<a class="anchor-link" href="#The-strategy">¶</a></h3>
+<h3 id="Strategy">Strategy<a class="anchor-link" href="#Strategy">¶</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Ideally, we would like the outcome of this project to be a fully functional model which can take any noisy speech signal and equalize it so that the speech becomes crystal clear. This, however, would require going through and understanding the project literature, obtaining the prerequisites, creating and optimizing the neural network, and documenting the findings in 63 hours. Even in the perfect setup, where both the training data and the objective function are served on a plate, this would not be an easy task.</p>
-<p>In our project, we need to both obtain the training data and create an objective functions that includes an implementation of a model of human auditory system before we can even begin creating and tweaking our neural network.</p>
+<p>Ideally, we would like the outcome of this project to be a fully functional model which can take any noisy speech signal and equalize it so that the speech becomes crystal clear. This, however, would require going through and understanding the project literature, obtaining the prerequisites, creating and optimizing the neural network, and documenting the findings in 63 hours. Even in the perfect setup, where both the training data and the objective function are available from the beginning, this would not be an easy task.</p>
+<p>In our project, we need to both obtain the training data and create the objective function, including an implementation of a model of human auditory system, before we can even begin to create and tweak our neural network.</p>
 <p>I have therefore concentrated my effort on obtaining a functioning implementation of the all the prerequisites necessary to build a neural network. I have not been able to do it within the time norm, and the work described in this notebook amounts to around 180 hours. However, it seems that after a long fight, I might just have succeeded, which I will demonstrate by utilizing the created objective function for training a simple neural network with two hidden layers at the end of this notebook.</p>
 <p>During the entire development process, I have attempted to keep the code neat and organized by creating toolboxes that will facilitate the maturation and testing of my work. I have also aimed to document and demonstrate each development step clearly, so that the project can be continued by whoever could be interested in the future.</p>
 
@@ -13336,7 +13339,7 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To keep the code clean, all the functions created by in the course of this project are defined in the modules of the package <code>toolbox</code> residing in the folder <code>[project_root]/toolbox</code>. Each module contains the functions belonging to the category indicated by the name of the module.</p>
+<p>To keep the code clean, all the functions created in the course of this project are defined in the modules of the package <code>toolbox</code> residing in the folder <code>[project_root]/toolbox</code>. Each module contains the functions belonging to the category indicated by the name of the module.</p>
 <p>The following modules are used in the project:</p>
 <ul>
 <li><code>initialization</code>: contains all the code that needs to be executed before anything else, such as imports of necessary packages, setting of options, definition of project paths, etc.</li>
@@ -13344,7 +13347,7 @@ $( document ).ready(function(){
 <li><code>configuration</code>: contains the code that defines the options regarding the appearance and interactivity of the Jupyter Notebook, Pandas, etc.</li>
 <li><code>paths</code>: contains a class containing all the paths necessary to run this project.</li>
 <li><code>data_loading</code>: contains the functions that help load the data into meaningful structures, such as the functions that load all the metadata about the TIMIT and Synthetic Speech datasets into respective Pandas dataframes.</li>
-<li><code>dhasp</code>: contains the class containing a PyTorch implementation of the Differentiable Hearing Aid Speech Processing (DHASP) model described in this <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9414571">article</a> [2]</li>
+<li><code>dhasp</code>: contains the class containing a PyTorch implementation of the Differentiable Hearing Aid Speech Processing (DHASP) model described in the <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9414571">DHASP article</a> [2]</li>
 <li><code>dsp</code>: contains the functions used for processing of signals and extracting their metrics.</li>
 <li><code>plotting</code>: contains the functions that help plot the data in this project.</li>
 <li><code>sound</code>: contains the functions make it easy to listen to the audio used in this project.</li>
@@ -13937,7 +13940,7 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The original framework compares the output of auditory processing of a signal for a person with normal hearing to the output of the processing of <strong>the same</strong> signal by a person with impaired hearing (Figure 1). We, on the other hand, would like to alter this framework so that it compares the result of auditory processing of two <strong>different</strong> signals - noisy and noise-free - by one person with normal hearing (Figure 2). When constructed this way, the framework can tweak the equalization of the noisy signal so that it resembles its noise-free counterpart to a highest possible degree.</p>
+<p>The original framework compares the output of simulated human auditory processing of a signal for a person with normal hearing to the output of the processing of <strong>the same</strong> signal by a person with impaired hearing (Figure 1). We, on the other hand, would like to alter this framework so that it compares two <strong>different</strong> signals - noisy and noise-free - by the same person with normal hearing (Figure 2). When constructed this way, the framework can tweak the equalization of the noisy signal so that it, at the level of simulated human perception, resembles its noise-free counterpart to a highest possible degree.</p>
 
 </div>
 </div>
@@ -13957,7 +13960,7 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To keep my code clean, I have implemented the entire DHASP framework as a class, whose structure I will present in the following sections. Let's load this DHASP object:</p>
+<p>To keep my code clean, I have implemented the entire DHASP framework as a class, whose structure I will present in the following sections. Let's load this class now:</p>
 
 </div>
 </div>
@@ -14057,29 +14060,29 @@ The attributes of the class DHASP object are:
 <li>bandwidths are set to their center frequencies divided by 2.3</li>
 <li>peak gain is set to unity, i.e. 0 dB.</li>
 </ul>
-<p>Summarising, the coefficients of the $i^{\text{th}}$ filter are given by:</p>
+<p>Summarising, the coefficients of the $k^{\text{th}}$ filter are given by:</p>
 $$
-\mathbf{h_{\text{eq}}^{(i)}}[n] =
-c_{\text{norm}}^{(i)}
+\mathbf{h_{\text{eq}}^{(k)}}[n] =
+c_{\text{norm}}^{(k)}
 \left(  \frac {n} {f_s}  \right) ^ {(N - 1)}
-\exp \left(  -2 \pi b_{\text{eq}}^{(i)} \frac {n} {f_s}  \right)
+\exp \left(  -2 \pi b_{\text{eq}}^{(k)} \frac {n} {f_s}  \right)
 \cos \left(  2 \pi f_{\text{eq}}  \frac {n} {f_s}   \right)
 $$<p>where:</p>
 <ul>
 <li>$n$ is the sample number</li>
 <li>$f_s$ is the sampling frequency</li>
-<li>$f_{\text{eq}}^{(i)}$ is the center frequency of the $i^{\text{th}}$ filter</li>
-<li>$b_{\text{eq}}^{(i)}$ is the bandwidth of the filter.</li>
+<li>$f_{\text{eq}}^{(k)}$ is the center frequency of the $k^{\text{th}}$ filter</li>
+<li>$b_{\text{eq}}^{(k)}$ is the bandwidth of the $k^{\text{th}}$ filter</li>
 <li>$N$ is the order of the <em>gammatone</em> filter, in our case set to 4</li>
-<li>$c_{\text{norm}}^{(i)}$ is a constant normalizing the peak gain of the $i^{\text{th}}$ filter to 0 dB, i.e.:</li>
+<li>$c_{\text{norm}}^{(k)}$ is a constant normalizing the peak gain of the $k^{\text{th}}$ filter to 0 dB, i.e.:</li>
 </ul>
 $$
 \begin{align}
-c_{\text{norm}}^{(i)}
- &amp;= \left| \sum_n  \mathbf{h_{\text{eq}}^{(i)}}[n] \exp \left(  -2j \pi f_{\text{eq}}^{(i)} \frac {n} {f_s}   \right) \right| \\
+c_{\text{norm}}^{(k)}
+ &amp;= \left| \sum_n  \mathbf{h_{\text{eq}}^{(k)}}[n] \exp \left(  -2j \pi f_{\text{eq}}^{(k)} \frac {n} {f_s}   \right) \right| \\
  &amp;= \sqrt{
-  \left( \sum_n  \mathbf{h_{\text{eq}}^{(i)}}[n] \cos \left( 2 \pi f_{\text{eq}}^{(i)} \frac {n} {f_s}  \right)  \right)^2
-   + \left( \sum_n  \mathbf{h_{\text{eq}}^{(i)}}[n] \sin \left( 2 \pi f_{\text{eq}}^{(i)} \frac {n} {f_s}  \right)  \right)^2
+  \left( \sum_n  \mathbf{h_{\text{eq}}^{(k)}}[n] \cos \left( 2 \pi f_{\text{eq}}^{(k)} \frac {n} {f_s}  \right)  \right)^2
+   + \left( \sum_n  \mathbf{h_{\text{eq}}^{(k)}}[n] \sin \left( 2 \pi f_{\text{eq}}^{(k)} \frac {n} {f_s}  \right)  \right)^2
    }
 \end{align}
 $$
@@ -14091,7 +14094,7 @@ $$
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The total response of this filterbank, i.e. the sum of the outputs of its filters, is then given by:</p>
 $$
-\mathbf{h_{\text{eq}}}[n] = \sum_i \mathbf{h_{\text{eq}}^{(i)}}[n]
+\mathbf{h_{\text{eq}}}[n] = \sum_k \mathbf{h_{\text{eq}}^{(k)}}[n]
 $$<p>Now, let's view the responses of the filters in the filterbank:</p>
 
 </div>
@@ -14174,8 +14177,8 @@ $$<p>Now, let's view the responses of the filters in the filterbank:</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can see the the response is almost flat with gain of 0 dB between 100 Hz and 10 kHz, which is exactly what we have aimed for. Our code is therefore working as intended.</p>
-<p>Now that we have defined the EQ filter, we can assign a gain $\mathbf{g_i}$ to each frequency band, and apply it to a speech signal $\mathbf{x_i}$. We can then feed the filtered signal to our neural network and try optimize the gains $\mathbf{g_i}$ for best speech intelligibility by minimizing the loss function $L$:</p>
+<p>We can see that the response is almost flat with gain of 0 dB between 100 Hz and 10 kHz, which is exactly what we have aimed for. Our code is therefore working as intended.</p>
+<p>Now that we have defined the EQ filter, we can, for each observation $n$, assign a gain to each EQ band $\mathbf{g_n} = \left\{ g_1^{(n)}, g_2^{(n)}, \cdots, g_8^{(n)} \right\}$. Thereafter, we can and apply the joint EQ gain to the speech signal $\mathbf{x_n}$, and feed the filtered signal to our neural network to optimize the gains $\mathbf{g_n}$ for best speech intelligibility by minimizing the loss function $L$:</p>
 $$
 G_{\text{optimized}} = \underset{G}{\text{argmin}} L \left( f(G, X), Y \right)
 $$
@@ -14185,12 +14188,11 @@ $$
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>where: $G = \left\{ \mathbf{g_1}, \mathbf{g_2}, \cdots, \mathbf{g_8}  \right\}$ a matrix containing the gains for our EQ, $X = \left\{ \mathbf{x_1}, \mathbf{x_2}, \cdots  \right\}$  matrix in which each row represents an speech signal, and $Y = \left\{ \mathbf{y_1}, \mathbf{y_2}, \cdots  \right\}$ a matrix where each row represents a corresponding target (clear) speech signal. $f(G, \mathbf{x})$ represents a speech signal after having been fitered with our EQ, i.e.:</p>
+<p>where: $G = \left\{ \mathbf{g_1}, \mathbf{g_2}, \cdots, \mathbf{g_n}  \right\}$ is a matrix containing the gains for our EQ, $X = \left\{ \mathbf{x_1}, \mathbf{x_2}, \cdots  \mathbf{x_n} \right\}$  matrix in which each row represents an speech signal, and $Y = \left\{ \mathbf{y_1}, \mathbf{y_2}, \cdots \mathbf{y_n}  \right\}$ a matrix where each row represents a corresponding target (clear) speech signal. $f(G, X)$ represents a speech signal after having been fitered with our EQ, i.e.:</p>
 $$
 \begin{align}
-f(G, x)
-&amp;= \text{conv} \left(  G  \mathbf{h_{\text{eq}}}, \mathbf{x}  \right) \\
-&amp;= \text{conv} \left(  \sum_i g_i \mathbf{h_{\text{eq}}^{(i)}}, \mathbf{x}  \right)
+f(\mathbf{g_n}, \mathbf{x_n})
+&amp;= \text{conv} \left(  \sum_{k=1}^{8} g_n^{(k)} \mathbf{h_{\text{eq}}^{(k)}}, \mathbf{x_n}  \right)
 \end{align}
 $$
 </div>
@@ -14226,7 +14228,7 @@ $$
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="The-filterbanks">The filterbanks<a class="anchor-link" href="#The-filterbanks">¶</a></h3><p>The coefficients of the filterbanks in the auditory model are calculated in the same way as the coefficients for the EQ applied to the noisy signal, i.e.:</p>
+<h3 id="The-filterbanks">The filterbanks<a class="anchor-link" href="#The-filterbanks">¶</a></h3><p>The coefficients of the filterbanks in the auditory model are calculated in the same way as the coefficients for the EQ we will apply to the noisy signal, i.e.:</p>
 $$
 \mathbf{h}[n] =
 c_{\text{norm}}^{(i)}
@@ -14379,7 +14381,7 @@ f_a[-3:, :]=tensor([[6746.3504],
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The bandwidth of the filters in the control filterbank is derived from equation 2 in <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9414571">DHASP article</a> [2] by setting $attn_o = 50$, resulting in</p>
+<p>The bandwidth of the filters in the control filterbank is derived from equation 2 in <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9414571">DHASP article</a> [2] by setting $attn_o = 50$, resulting in:</p>
 $$
 b_c = 4 b_a
 $$
@@ -14561,9 +14563,15 @@ $$
         1 -
         \frac {1} {CR}
     \right)
-
 \end{align}
-$$<p>It follows from this that the higher the level, the higher the gain that is applied to the signal, which is obviously the opposite of compression. Therefore, the true expression for $G_{\text{comp}}$ must be:</p>
+$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It follows from this that the higher the signal level, the higher the gain that is applied to the signal, which is obviously the opposite of compression. Therefore, the true expression for $G_{\text{comp}}$ must be:</p>
 $$
 G_{\text{comp}}^{(i)}(n) =
 \left(
@@ -14679,7 +14687,7 @@ $$<p>In this equation, the gain is inversely proportional to the signal strength
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now that we have the functional filterbank and compressor, we can calculate the output of the auditory model, which is expresssed by the amplitude envelope, in dB (this time we will use dBFS as the reference will no longer matter), of the compressed ouput of each of the filters in the analysis filterbank:</p>
+<p>Now that we have a functional filterbank and compressor, we can calculate the output of the auditory model, which is the amplitude envelope, in dB (this time we will use dBFS as the reference will no longer matter), of the compressed ouput of each of the filters in the analysis filterbank. Let's test our code:</p>
 
 </div>
 </div>
@@ -14923,7 +14931,7 @@ L_{e, \text{Rubino}} =
             \right)
         \right)
     \right|
-$$<p>This loss penalizes <em>any</em> difference between input and the target with respect to the sum of the energies of the envelopes of the simulated outputs of the auditory processing. This means that a filter that amplifies one frequency band and attenuates another can still have en energy control loss of 0 as long as the sum of energies in all of the frequency bands remains equal to that of the target. Intuitively, this is what we want, but such a behavior would be penalized if use the original loss $L_e$.</p>
+$$<p>This loss penalizes <em>any</em> difference between input and the target with respect to the sum of the energies of the envelopes of the simulated outputs of the auditory processing. This means that a filter that amplifies one frequency band and attenuates another can still have en energy control loss of 0 as long as the sum of energies in all of the frequency bands remains equal to that of the target. Intuitively, this is what we want, but such a behavior would be penalized if we used the original loss $L_e$.</p>
 
 </div>
 </div>
@@ -14938,7 +14946,7 @@ $$<p>This loss penalizes <em>any</em> difference between input and the target wi
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The loss is defined in the equation 12 in the <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9414571">DHASP article</a> [2] as a combination of the cepstral correlation measure and an energy control loss:</p>
+<p>The loss is defined by the equation 12 in the <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9414571">DHASP article</a> [2] as a combination of the cepstral correlation measure and an energy control loss:</p>
 $$
 L =
  - \frac {1} {5} \sum_{j=2}^{6} R(j)
@@ -15344,7 +15352,7 @@ audio_samples["babble"].shape = torch.Size([36, 108844])
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, let's divide the audio samples in two groups: one containing the clean speech signal (target) and one containing their noisy counterparts (input):</p>
+<p>Now, we need to divide the audio samples in two groups: one containing the clean speech signal (target) and one containing their noisy counterparts (input):</p>
 
 </div>
 </div>
@@ -15396,7 +15404,7 @@ X_target.shape = torch.Size([108, 108844])
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Great, now we have the waveforms. But our model will learn from the combination of the cepstral sequences and the smooth energy envelopes of the simulated output of human auditory processing. Therefore, we need to calculate them calculate them for every waveform:</p>
+<p>Great, now we have the waveforms. But our model will not learn from the audio waveforms, but from the combination of the cepstral sequences and the smooth energy envelopes of the simulated output of human auditory processing. Therefore, we need to calculate them for every observation, which we can do as follows:</p>
 
 </div>
 </div>
@@ -15525,7 +15533,7 @@ E_target.shape = torch.Size([108, 32, 565])
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To facilitate the handling of the data, we will now create a PyTorch dataset for our data. Note that we normalize the items in our dataset that will be used as inputs to the neural network, i.e. <code>C_input</code> and <code>E_input</code>, so that they are both represented in the same scale, constricted to values between 0 and 1.</p>
+<p>To facilitate the handling of the data, we will now create a PyTorch dataset for our data. Note that we normalize the items in our dataset that will be used as inputs to the neural network, i.e. <code>C_input</code> and <code>E_input</code>, so that they are both represented in the same scale between 0 and 1.</p>
 
 </div>
 </div>
@@ -15628,7 +15636,7 @@ E_target.shape = torch.Size([108, 32, 565])
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Ok, let's test our function using two thirds of the data for training. Also, let's use a batch size of 5:</p>
+<p>Ok, let's now test our function using two thirds of the data for training. Also, let's use a batch size of 5:</p>
 
 </div>
 </div>
@@ -15659,7 +15667,7 @@ E_target.shape = torch.Size([108, 32, 565])
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Ok, so our data is ready. Now, we need a network we can use to process them.</p>
+<p>Our data is now ready. Now, we need a network we can use to process them.</p>
 
 </div>
 </div>
@@ -15676,11 +15684,11 @@ E_target.shape = torch.Size([108, 32, 565])
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's first recall how we want to structure our model:</p>
 <ul>
-<li>The input to our network will be a vector containing flattened, normalized versions of the cepstral sequences <code>C_input</code> and smoothed energy envelopes <code>E_input</code> .</li>
+<li>The input to our network will be a vector containing flattened, normalized versions of the cepstral sequences <code>C_input</code> and the corresponding smoothed energy envelopes <code>E_input</code> .</li>
 <li>The output of our network will be the gain coefficients for the 8 frequency bands of our EQ filter.</li>
 <li>The output EQ will be applied to the waveform <code>X_input</code> and evaluated against the cepstral sequences and smoothed energy envelopes of the target <code>C_target</code> and <code>E_target</code>.</li>
 </ul>
-<p>Now, let's initialize a simple neural network, that can take care of the training. Once again, we wrap the initialization in a function to make it more convenient to work with later.</p>
+<p>Now, let's initialize a simple neural network that can take care of the training. Once again, we wrap the initialization in a function to make it more convenient to work with later.</p>
 
 </div>
 </div>
@@ -15777,7 +15785,7 @@ output_test_model = tensor([[-0.2155, -0.5057, -0.6727],
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It works. Now we will need a criterion against which we can evaluate our output.</p>
+<p>It works. Now, we will need a criterion against which we can evaluate our output.</p>
 
 </div>
 </div>
@@ -15792,12 +15800,12 @@ output_test_model = tensor([[-0.2155, -0.5057, -0.6727],
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As stated before:</p>
+<p>We know that:</p>
 <ul>
 <li>The output of our network will be the gain coefficients for the 8 frequency bands of our EQ filter.</li>
-<li>The the output EQ will be applied to the waveform <code>X_input</code> and evaluated against the cepstral sequences and smoothed energy envelopes of the target <code>C_target</code> and <code>E_target</code>.</li>
+<li>The output EQ will be applied to the waveform <code>X_input</code> and evaluated against the cepstral sequences and smoothed energy envelopes of the target <code>C_target</code> and <code>E_target</code>.</li>
 </ul>
-<p>So how do we want to express our gain coefficients? My proposal is to map them so that they represent the gains in dB in the range from -20 to 20. For that, we will use a sigmoid function:</p>
+<p>Therefore, we must specify how we want to interpret our gain coefficients? My proposal is to map them so that they represent the gains in dB in the range from -20 to 20. For that, we will use a sigmoid function:</p>
 
 </div>
 </div>
@@ -15821,9 +15829,9 @@ output_test_model = tensor([[-0.2155, -0.5057, -0.6727],
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>And now to the loss:</p>
+<p>Now, we can start computing the loss.</p>
 <p>First of all, we will want to constrict the EQ'ed input signal to values between -1 and 1 (the audio signal range).</p>
-<p>We will also need to choose how to calculate the energy loss. As I would like the level of the EQ'ed signal to match that of the target, I will use the Rubino energy loss. With regard to <code>alpha</code>, we know that the value of R ranges from 0 to 1. We must therefore adjust <code>alpha</code> so that the magnitude of the energy loss doesn't completely overshadow out efforts to match the cepstral sequences. Therefore, I have chosen <code>alpha</code> so that that each 1 dB of average difference between the result and the target with regard to the sum of envelope energies will increase the loss by 0.01.</p>
+<p>We will also need to choose how to calculate the energy loss. As I would like the level of the EQ'ed signal to match that of the target, I will use the Rubino energy loss. With regard to <code>alpha</code>, we know that the value of $R$ ranges from 0 to 1. We must therefore adjust <code>alpha</code> so that the magnitude of the energy loss doesn't completely overshadow out efforts to match the cepstral sequences. Therefore, I have chosen <code>alpha</code> so that that each 1 dB of average difference between the result and the target with regard to the sum of envelope energies will increase the loss by 0.01.</p>
 <p>Ok, let's now define the loss function:</p>
 
 </div>
@@ -15873,7 +15881,7 @@ output_test_model = tensor([[-0.2155, -0.5057, -0.6727],
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>And now, let's move over to training the network.</p>
+<p>We now have all the ingredients necessary to train the network.</p>
 
 </div>
 </div>
@@ -15888,7 +15896,7 @@ output_test_model = tensor([[-0.2155, -0.5057, -0.6727],
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We're almost there - the time has now come to train the network. Once again, we will build a function that will do most of the dirty work for us, so that we can easier play with the parameters later. However, let's start by defining a function that will make it easy for us to monitor the progress of the training by printing out the temporary status:</p>
+<p>We're almost there - the time has now come to train the network. Once again, we will build a function that will help us monitor the progress of the training by printing out the temporary results:</p>
 
 </div>
 </div>
@@ -16104,10 +16112,10 @@ output_test_model = tensor([[-0.2155, -0.5057, -0.6727],
 <ul>
 <li>We set <code>alpha</code> = 0.02 so that that each 1 dB of average difference between the result and the target with regard to the sum of envelope energies will increase the loss the loss by 0.02.</li>
 <li>We use two thirds of the data for training. </li>
-<li>The batch size is set to 3 samples. </li>
+<li>The batch size is set to 5 samples. </li>
 <li>As optimizer, we go for the "classic" stochastic gradient descent.</li>
 </ul>
-<p>We will show the status after every result for every result.</p>
+<p>We will show the status after processing every batch.</p>
 
 </div>
 </div>
@@ -16222,7 +16230,7 @@ Training done
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can see in the graph above that the loss in our network is not improving by a great deal. This is not entirely surprising for several reasons. First, the starting loss was already quite low: the absolute achievable minimum is -1, and we started at around -0.6 to -0.7. We also know that at the minimum, the cepstral sequences of the EQ'ed input and the target are perfectly correlated, and there is no difference in the average level of the signals. It is therefore practically unachievable to reach a loss of -1 and that gives us relatively little room for improvement. Therefore, better results might be achieved if we use samples that are more noisy than the ones we have used here.</p>
+<p>We can see in the learning curves above that the loss in our network is not improving by a great deal. This is not entirely surprising for several reasons. First, the starting loss was already quite low: the absolute achievable minimum is -1, and we started at around -0.6 to -0.7. We also know that at the minimum, the cepstral sequences of the EQ'ed input and the target are perfectly correlated, and there is no difference in the average level of the signals. It is therefore practically unachievable to reach a loss of -1 and that gives us relatively little room for improvement. Therefore, better results might be achieved if we use samples that are more noisy than the ones we have used in this example.</p>
 <p>Also, the EQ we are using is rather coarse, and the training process has just begun, i.e. the network architecture is in its fetal state. The main purpose of this training session was therefore not to obtain groundbreaking results, but to demonstrate that the objective function which we have developed is working, which we, in my opinion, have achieved.</p>
 <p>And now, when have the tools in place, we can start searching for the network architecture that will best solve our problems. We will, however, leave this part for another project. Instead, let's finish our work by taking a look at the model that has achieved the lowest loss on a training batch. First, we load the parameters:</p>
 
@@ -16492,9 +16500,9 @@ Training done
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this project, I have created a PyTorch implementation of a differentiable objective function based on a <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9414571">DHASP framework</a>, which I have adjusted so that it can be used to train a neural network with the objective of optimizing parameters of an equalizer to improve the intelligibility of a speech signal. I have demonstrated that the objective function works by utilizing it to train a simple neural network with two hidden layers. I have also built a system of toolboxes to facilitate the process of maturing and testing the code, as well as demonstrated and documented each step in the development process.</p>
-<p>I would have loved to have had more time for tweaking the model to see how good it could do at improving intelligibility, but after having put around 180 hours into this project, I had to leave it here. In fact, I did not plan to implement the part where I apply the objective function to a simple network, but having come this far I could not help myself and had to see it in action. Yes, deep learning can be addictive. I am, all things together, very happy to leave a functional model that is ready to be developed, together with well-organized tools that can help one along. The implementation of the <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9414571">DHASP framework</a> was in itself a challenging task, and without my experience from the audio industry, I am not sure I would have managed to do it in a sensible manner.</p>
-<p>Regarding the setup: Raising the intelligibility of speech by applying an EQ alone is not an easy task, but I think the chances of success can be improved if we increase the number of frequency bands of our EQ, allowing for a more precise equalization. Also, it might be a good idea to add an extra EQ control for overall gain. With regard to network architecture, it could be interesting whether a convolutional network could be utilized at finding patterns in cepstral spectra, and adjusting the EQ parameters accordingly. It is, at least, worth a shot.</p>
+<p>In this project, I have created a PyTorch implementation of a differentiable objective function based on a <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9414571">DHASP framework</a> [2], which I have adjusted so that it can be used to train a neural network with the objective of optimizing parameters of an equalizer to improve the intelligibility of a speech signal. I have demonstrated that the objective function works by utilizing it to train a simple neural network with two hidden layers. I have also built a system of toolboxes to facilitate the process of maturing and testing the code, as well as demonstrated and documented each step in the development process.</p>
+<p>I would have loved to have had more time for tweaking the model to see how good it could do at improving intelligibility, but after having put around 180 hours into this project, I had to leave it here. In fact, I did not plan to implement the part where I apply the objective function to a simple network, but having come this far I could not help myself and had to see it in action. Yes, deep learning can be addictive. I am, all things together, very happy to leave a functional model that is ready to be developed, together with well-organized tools that can help one along. The implementation of the <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9414571">DHASP framework</a> [2] was in itself a challenging task, and without my experience from the audio industry, I am not sure I would have managed to do it in a sensible manner.</p>
+<p>Regarding the setup: Raising the intelligibility of speech by applying an EQ alone is not an easy task, but I think the chances of success can be improved if we increase the number of frequency bands, allowing for a more precise equalization. Also, it might be a good idea to add an extra EQ control for overall gain. With regard to network architecture, it could be interesting to see whether a convolutional network would do a good job at finding patterns in cepstral spectra, and adjusting the EQ parameters accordingly. It is, at least, worth a shot.</p>
 <p>Thank you.</p>
 
 </div>
